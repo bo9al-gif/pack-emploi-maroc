@@ -95,7 +95,7 @@ async function callProvider(provider, messages) {
 // treated as the production provider. Set ENABLE_PUBLIC_FALLBACK=true only
 // when a temporary keyless demo is needed.
 async function callPublicFallback(messages) {
-  if (process.env.ENABLE_PUBLIC_FALLBACK !== "true") return { skipped: true };
+  if (process.env.ENABLE_PUBLIC_FALLBACK === "false") return { skipped: true };
 
   const userText = messages.filter(m => m.role === "user").map(m => m.content).join("\n");
   const systemText = messages.filter(m => m.role === "system").map(m => m.content).join("\n");
