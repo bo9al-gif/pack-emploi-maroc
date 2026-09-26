@@ -90,6 +90,33 @@ async function callProvider(provider, messages) {
   }
 }
 
+// Last-resort legacy public endpoint. It is intentionally opt-in because
+// anonymous public inference has strict/unstable limits and should not be
+// treated as the production provider. Set ENABLE_PUBLIC_FALLBACK=true only
+// when a temporary keyless demo is needed.
+async function callPublicFallback(messages) {
+  if (process.env.ENABLE_PUBLIC_FALLBACK !== "true") return { skipped: true };
+
+  const userText = messages.filter(m => m.role === "user").map(m => m.content).join("\n");
+  const systemText = messages.filter(m => m.role === "system").map(m => m.content).join("\n");
+  const prompt = `${systemText}\n\nUtilisateur:\n${userText}`;
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 15000);
+
+  try {
+    const url = "https://text.pollinations.ai/" + encodeURIComponent(prompt);
+    const response = await fetch(url, { signal: controller.signal });
+    const text = await response.text();
+    if (!response.ok || !text.trim()) {
+      throw new Error(`${response.status}: ${cleanError(text)}`);
+    }
+    return { answer: text.trim(), provider: "public-demo", model: "pollinations-legacy" };
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
 async function chatWithFreeFallback(messages) {
   const errors = [];
 
@@ -101,6 +128,13 @@ async function chatWithFreeFallback(messages) {
     } catch (error) {
       errors.push(`${provider.name}: ${error.message}`);
     }
+  }
+
+  try {
+    const result = await callPublicFallback(messages);
+    if (!result.skipped) return result;
+  } catch (error) {
+    errors.push(`public-demo: ${error.message}`);
   }
 
   const error = new Error("No configured AI provider is available.");
