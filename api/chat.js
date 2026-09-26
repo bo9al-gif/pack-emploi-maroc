@@ -29,7 +29,7 @@ module.exports = async function(req, res) {
   } catch (e) {
     console.error("AI Maroc error:", e.details || e.message);
     return res.status(503).json({
-      error: "ما كاين حتى محرك AI متاح دابا. زيد مفتاح واحد على الأقل من Environment Variables.",
+      error: "محركات AI المجانية ما جاوباتش دابا. عاود المحاولة من بعد لحظات.",
       details: e.details || undefined
     });
   }
