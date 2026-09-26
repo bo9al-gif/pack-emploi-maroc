@@ -1,17 +1,24 @@
 <!doctype html>
-<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Pack Emploi Maroc — Créateur de CV</title>
+<html lang="fr" dir="ltr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pack Emploi Maroc — CV Builder</title>
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#eef2f6;color:#172033}.toolbar{position:sticky;top:0;z-index:10;background:#172033;color:white;padding:12px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}button,select{border:0;border-radius:7px;padding:9px 12px;font-weight:700;cursor:pointer}button{background:#1d74d6;color:#fff}.secondary{background:#344054}.danger{background:#c0392b}.app{display:grid;grid-template-columns:minmax(280px,380px) 1fr;gap:20px;max-width:1400px;margin:auto;padding:20px}.panel{background:#fff;border-radius:12px;padding:18px;box-shadow:0 4px 18px #0001}label{display:block;font-size:13px;font-weight:700;margin:12px 0 5px}input,textarea{width:100%;padding:9px;border:1px solid #ccd3dd;border-radius:7px;font:inherit}textarea{min-height:75px;resize:vertical}.cv{width:210mm;min-height:297mm;background:#fff;margin:auto;padding:18mm;box-shadow:0 4px 22px #0003}h1{margin:0;font-size:28px;text-transform:uppercase;letter-spacing:1px}.headline{color:#1769aa;font-weight:700;margin:5px 0 12px}.meta{font-size:12px;color:#536273;border-bottom:2px solid #1769aa;padding-bottom:12px}section{margin-top:18px}section h2{font-size:13px;text-transform:uppercase;color:#1769aa;border-bottom:1px solid #ccd3dd;padding-bottom:5px}p{line-height:1.5;margin:6px 0}@media(max-width:950px){.app{grid-template-columns:1fr}.cv{width:100%;min-height:auto;padding:25px}}@media print{.toolbar,.panel{display:none!important}.app{display:block;padding:0}.cv{box-shadow:none;width:210mm;min-height:297mm;margin:0}}
-</style></head>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#eef2f6;color:#172033}.toolbar{position:sticky;top:0;z-index:10;background:#172033;color:white;padding:10px;display:flex;gap:7px;flex-wrap:wrap;align-items:center}.toolbar button,.toolbar select{border:0;border-radius:7px;padding:9px 11px;font-weight:700;cursor:pointer}.primary{background:#1d74d6;color:#fff}.secondary{background:#344054;color:#fff}.danger{background:#c0392b;color:#fff}.app{display:grid;grid-template-columns:minmax(290px,390px) 1fr;gap:18px;max-width:1450px;margin:auto;padding:18px}.panel,.cv{background:#fff;border-radius:12px;box-shadow:0 4px 18px #0001}.panel{padding:17px}.panel h3{margin-top:0}.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}label{display:block;font-size:12px;font-weight:700;margin:10px 0 4px}input,textarea,select{width:100%;padding:9px;border:1px solid #ccd3dd;border-radius:7px;font:inherit}textarea{min-height:72px;resize:vertical}.hint{font-size:11px;color:#667085}.cv{width:210mm;min-height:297mm;margin:auto;padding:16mm;overflow:hidden}.cv.modern{border-top:9px solid #1769aa}.cv.classic{border-top:9px solid #333}.cv.compact{padding:11mm}.cv.rtl{direction:rtl;text-align:right}.cv.rtl .meta{text-align:right}.cv h1{margin:0;font-size:28px;text-transform:uppercase;letter-spacing:1px}.headline{font-weight:700;margin:5px 0 10px;color:#1769aa}.meta{font-size:11px;color:#536273;border-bottom:2px solid #1769aa;padding-bottom:10px}.cv.classic .headline{color:#333}.cv.classic .meta{border-color:#333}.cv.compact h1{font-size:23px}.cv.compact section{margin-top:11px}.cv.compact p{line-height:1.35}.cv section{margin-top:16px}.cv section h2{font-size:12px;text-transform:uppercase;color:#1769aa;border-bottom:1px solid #ccd3dd;padding-bottom:4px}.cv.classic section h2{color:#333}.cv p{line-height:1.45;margin:5px 0;white-space:normal}.ats{margin-top:12px;padding:10px;border-radius:8px;background:#f6f8fa;font-size:12px}.score{font-weight:800}.footer-note{font-size:10px;color:#667085;margin-top:14px}.hidden{display:none!important}@media(max-width:950px){.app{grid-template-columns:1fr}.cv{width:100%;min-height:auto;padding:24px}.grid{grid-template-columns:1fr}}@media print{.toolbar,.panel,.ats{display:none!important}.app{display:block;padding:0}.cv{box-shadow:none;width:210mm;min-height:297mm;margin:0;border-radius:0}}
+</style>
+</head>
 <body>
-<div class="toolbar"><strong>Pack Emploi Maroc — CV Builder</strong><button onclick="window.print()">📄 Exporter / PDF</button><button class="secondary" onclick="save()">💾 Sauvegarder</button><button class="secondary" onclick="load()">↩ Charger</button><button class="danger" onclick="resetCV()">Réinitialiser</button></div>
-<div class="app"><div class="panel">
-<h3>Informations du candidat</h3>
-<label>Nom et prénom</label><input id="name" value="NOM PRÉNOM">
-<label>Poste recherché</label><input id="headline" value="Candidat motivé — à la recherche d'une opportunité">
-<label>Téléphone</label><input id="phone" placeholder="+212 ...">
-<label>Email</label><input id="email" placeholder="email@example.com">
+<div class="toolbar">
+<strong>Pack Emploi Maroc — CV Builder</strong>
+<button class="secondary" onclick="setLang('fr')">FR</button><button class="secondary" onclick="setLang('ar')">العربية</button>
+<select id="template" onchange="setTemplate(this.value)"><option value="modern">Moderne</option><option value="classic">Classique</option><option value="compact">Compact</option></select>
+<button class="primary" onclick="window.print()">📄 PDF</button><button class="secondary" onclick="save()">💾 Sauvegarder</button><button class="secondary" onclick="load()">↩ Charger</button><button class="danger" onclick="resetCV()">Réinitialiser</button>
+</div>
+<div class="app">
+<div class="panel">
+<h3 id="formTitle">Informations du candidat</h3>
+<div class="grid"><div><label>Nom et prénom</label><input id="name" value="NOM PRÉNOM"></div><div><label>Poste recherché</label><input id="headline" value="Candidat motivé"></div></div>
+<div class="grid"><div><label>Téléphone</label><input id="phone" placeholder="+212 ..."></div><div><label>Email</label><input id="email" placeholder="email@example.com"></div></div>
 <label>Ville</label><input id="city" value="Salé, Maroc">
 <label>Profil</label><textarea id="summary">Jeune candidat sérieux, ponctuel et motivé, avec une première expérience professionnelle. Disponible pour apprendre et contribuer efficacement au sein d'une équipe.</textarea>
 <label>Formation</label><textarea id="education">Baccalauréat — Sciences Humaines — 2025</textarea>
@@ -28,15 +35,28 @@ Communication
 Adaptation</textarea>
 <label>Langues</label><textarea id="languages">Arabe — courant
 Anglais — débutant</textarea>
+<div class="ats"><span id="atsLabel">Compatibilité mots-clés</span> : <span class="score" id="atsScore">0%</span><div class="hint" id="atsHint">Ajoutez une offre d'emploi ci-dessous pour vérifier les mots-clés.</div><textarea id="job" placeholder="Collez ici l'offre d'emploi (optionnel)"></textarea><button class="primary" onclick="ats()">Analyser l'offre</button></div>
 </div>
-<div class="cv"><h1 id="v-name"></h1><div class="headline" id="v-headline"></div><div class="meta"><span id="v-phone"></span> · <span id="v-email"></span> · <span id="v-city"></span></div>
-<section><h2>Profil</h2><p id="v-summary"></p></section><section><h2>Formation</h2><p id="v-education"></p></section><section><h2>Expérience professionnelle</h2><p id="v-experience"></p></section><section><h2>Compétences</h2><p id="v-skills"></p></section><section><h2>Langues</h2><p id="v-languages"></p></section></div></div>
+<div id="cv" class="cv modern">
+<h1 id="v-name"></h1><div class="headline" id="v-headline"></div><div class="meta"><span id="v-phone"></span> · <span id="v-email"></span> · <span id="v-city"></span></div>
+<section><h2 id="t-profile">Profil</h2><p id="v-summary"></p></section>
+<section><h2 id="t-education">Formation</h2><p id="v-education"></p></section>
+<section><h2 id="t-experience">Expérience professionnelle</h2><p id="v-experience"></p></section>
+<section><h2 id="t-skills">Compétences</h2><p id="v-skills"></p></section>
+<section><h2 id="t-languages">Langues</h2><p id="v-languages"></p></section>
+<div class="footer-note">Pack Emploi Maroc — Vérifiez toutes les informations avant l'envoi.</div>
+</div></div>
 <script>
-const ids=['name','headline','phone','email','city','summary','education','experience','skills','languages'];
-function render(){ids.forEach(id=>{const el=document.getElementById('v-'+id);let v=document.getElementById(id).value.trim();el.innerHTML=v.replace(/\n/g,'<br>')})}
+const ids=['name','headline','phone','email','city','summary','education','experience','skills','languages','job'];
+const labels={fr:{profile:'Profil',education:'Formation',experience:'Expérience professionnelle',skills:'Compétences',languages:'Langues',title:'Informations du candidat'},ar:{profile:'الملف الشخصي',education:'التكوين',experience:'الخبرة المهنية',skills:'المهارات',languages:'اللغات',title:'معلومات المترشح'}};
+function render(){ids.forEach(id=>{const el=document.getElementById('v-'+id);if(el){let v=document.getElementById(id).value.trim();el.textContent=v;el.innerHTML=v.replace(/\n/g,'<br>')}})}
 ids.forEach(id=>document.getElementById(id).addEventListener('input',render));
-function save(){const d={};ids.forEach(id=>d[id]=document.getElementById(id).value);localStorage.setItem('pack-emploi-cv',JSON.stringify(d));alert('CV sauvegardé sur cet appareil.')}
-function load(){const d=JSON.parse(localStorage.getItem('pack-emploi-cv')||'null');if(!d)return alert('Aucune sauvegarde trouvée.');ids.forEach(id=>{if(d[id]!==undefined)document.getElementById(id).value=d[id]});render()}
+function setLang(l){document.documentElement.lang=l;document.documentElement.dir=l==='ar'?'rtl':'ltr';const x=labels[l];formTitle.textContent=x.title;['profile','education','experience','skills','languages'].forEach(k=>document.getElementById('t-'+k).textContent=x[k]);document.getElementById('cv').classList.toggle('rtl',l==='ar');localStorage.setItem('pack-lang',l)}
+function setTemplate(t){const cv=document.getElementById('cv');cv.classList.remove('modern','classic','compact');cv.classList.add(t);localStorage.setItem('pack-template',t)}
+function save(){const d={};ids.forEach(id=>d[id]=document.getElementById(id).value);d.lang=localStorage.getItem('pack-lang')||'fr';d.template=localStorage.getItem('pack-template')||'modern';localStorage.setItem('pack-emploi-cv',JSON.stringify(d));alert(d.lang==='ar'?'تم حفظ السيرة على هذا الجهاز.':'CV sauvegardé sur cet appareil.')}
+function load(){const d=JSON.parse(localStorage.getItem('pack-emploi-cv')||'null');if(!d)return alert('Aucune sauvegarde trouvée.');ids.forEach(id=>{if(d[id]!==undefined)document.getElementById(id).value=d[id]});setLang(d.lang||'fr');setTemplate(d.template||'modern');render()}
 function resetCV(){if(confirm('Réinitialiser le CV ?')){localStorage.removeItem('pack-emploi-cv');location.reload()}}
-render();
-</script></body></html>
+function ats(){const job=document.getElementById('job').value.toLowerCase();if(!job){atsScore.textContent='0%';atsHint.textContent='Collez une offre d’emploi.';return}const cv=ids.filter(x=>x!=='job').map(x=>document.getElementById(x).value.toLowerCase()).join(' ');const words=[...new Set(job.match(/[a-zà-ÿ\u0600-\u06ff]{4,}/gi)||[])].filter(w=>!['dans','pour','avec','nous','vous','une','les','des','sur','être','this','that','from','your','with','the','and','pour'].includes(w));const hits=words.filter(w=>cv.includes(w));const pct=words.length?Math.round(hits.length/words.length*100):0;atsScore.textContent=pct+'%';atsHint.textContent=hits.length+' mots-clés détectés sur '+words.length+'. Analyse locale, aucune donnée envoyée.'}
+setLang(localStorage.getItem('pack-lang')||'fr');setTemplate(localStorage.getItem('pack-template')||'modern');render();
+</script>
+</body></html>
