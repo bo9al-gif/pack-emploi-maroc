@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pack Emploi Maroc — Créateur de CV</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#eef2f6;color:#172033}.toolbar{position:sticky;top:0;z-index:10;background:#172033;color:white;padding:12px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}button,select{border:0;border-radius:7px;padding:9px 12px;font-weight:700;cursor:pointer}button{background:#1d74d6;color:#fff}.secondary{background:#344054}.danger{background:#c0392b}.app{display:grid;grid-template-columns:minmax(280px,380px) 1fr;gap:20px;max-width:1400px;margin:auto;padding:20px}.panel{background:#fff;border-radius:12px;padding:18px;box-shadow:0 4px 18px #0001}label{display:block;font-size:13px;font-weight:700;margin:12px 0 5px}input,textarea{width:100%;padding:9px;border:1px solid #ccd3dd;border-radius:7px;font:inherit}textarea{min-height:75px;resize:vertical}.cv{width:210mm;min-height:297mm;background:#fff;margin:auto;padding:18mm;box-shadow:0 4px 22px #0003}h1{margin:0;font-size:28px;text-transform:uppercase;letter-spacing:1px}.headline{color:#1769aa;font-weight:700;margin:5px 0 12px}.meta{font-size:12px;color:#536273;border-bottom:2px solid #1769aa;padding-bottom:12px}section{margin-top:18px}section h2{font-size:13px;text-transform:uppercase;color:#1769aa;border-bottom:1px solid #ccd3dd;padding-bottom:5px}p{line-height:1.5;margin:6px 0}@media(max-width:950px){.app{grid-template-columns:1fr}.cv{width:100%;min-height:auto;padding:25px}}@media print{.toolbar,.panel{display:none!important}.app{display:block;padding:0}.cv{box-shadow:none;width:210mm;min-height:297mm;margin:0}}
+</style></head>
+<body>
+<div class="toolbar"><strong>Pack Emploi Maroc — CV Builder</strong><button onclick="window.print()">📄 Exporter / PDF</button><button class="secondary" onclick="save()">💾 Sauvegarder</button><button class="secondary" onclick="load()">↩ Charger</button><button class="danger" onclick="resetCV()">Réinitialiser</button></div>
+<div class="app"><div class="panel">
+<h3>Informations du candidat</h3>
+<label>Nom et prénom</label><input id="name" value="NOM PRÉNOM">
+<label>Poste recherché</label><input id="headline" value="Candidat motivé — à la recherche d'une opportunité">
+<label>Téléphone</label><input id="phone" placeholder="+212 ...">
+<label>Email</label><input id="email" placeholder="email@example.com">
+<label>Ville</label><input id="city" value="Salé, Maroc">
+<label>Profil</label><textarea id="summary">Jeune candidat sérieux, ponctuel et motivé, avec une première expérience professionnelle. Disponible pour apprendre et contribuer efficacement au sein d'une équipe.</textarea>
+<label>Formation</label><textarea id="education">Baccalauréat — Sciences Humaines — 2025</textarea>
+<label>Expérience</label><textarea id="experience">Employé — Stock / Café — environ 1 an
+• Réception et rangement des produits
+• Organisation de l'espace de travail
+• Accueil et service des clients
+• Travail en équipe et respect des consignes</textarea>
+<label>Compétences</label><textarea id="skills">Organisation
+Ponctualité
+Travail en équipe
+Sens du service
+Communication
+Adaptation</textarea>
+<label>Langues</label><textarea id="languages">Arabe — courant
+Anglais — débutant</textarea>
+</div>
+<div class="cv"><h1 id="v-name"></h1><div class="headline" id="v-headline"></div><div class="meta"><span id="v-phone"></span> · <span id="v-email"></span> · <span id="v-city"></span></div>
+<section><h2>Profil</h2><p id="v-summary"></p></section><section><h2>Formation</h2><p id="v-education"></p></section><section><h2>Expérience professionnelle</h2><p id="v-experience"></p></section><section><h2>Compétences</h2><p id="v-skills"></p></section><section><h2>Langues</h2><p id="v-languages"></p></section></div></div>
+<script>
+const ids=['name','headline','phone','email','city','summary','education','experience','skills','languages'];
+function render(){ids.forEach(id=>{const el=document.getElementById('v-'+id);let v=document.getElementById(id).value.trim();el.innerHTML=v.replace(/\n/g,'<br>')})}
+ids.forEach(id=>document.getElementById(id).addEventListener('input',render));
+function save(){const d={};ids.forEach(id=>d[id]=document.getElementById(id).value);localStorage.setItem('pack-emploi-cv',JSON.stringify(d));alert('CV sauvegardé sur cet appareil.')}
+function load(){const d=JSON.parse(localStorage.getItem('pack-emploi-cv')||'null');if(!d)return alert('Aucune sauvegarde trouvée.');ids.forEach(id=>{if(d[id]!==undefined)document.getElementById(id).value=d[id]});render()}
+function resetCV(){if(confirm('Réinitialiser le CV ?')){localStorage.removeItem('pack-emploi-cv');location.reload()}}
+render();
+</script></body></html>
