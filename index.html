@@ -26,7 +26,7 @@ footer{text-align:center;color:var(--muted);padding:30px 18px;font-size:13px}@me
 <button class="tool" onclick="openTool('admin')">📄<b>إداري</b><span>طلب، شكاية، تصريح أو مراسلة بصياغة منظمة.</span></button>
 </div>
 <section class="panel" id="panel">
-<h2>اختار أداة 👆</h2><p style="color:var(--muted)">النسخة الأولى جاهزة بواجهة خفيفة للهاتف. ملي نربط محرك AI، نفس الواجهة غادي تخدم بإجابات مولدة فعلياً.</p>
+<h2>اختار أداة 👆</h2><p style="color:var(--muted)">النسخة الأولى جاهزة بواجهة خفيفة للهاتف. كتجرب محركات AI المجانية تلقائياً، وإذا توفر مفتاح مدفوع/مجاني كتستعملو كأولوية.</p>
 </section>
 </main><footer>AI Maroc 🇲🇦 — نسخة أولية قابلة للتطوير إلى تطبيق وربح من Premium.</footer>
 <script>
@@ -43,6 +43,6 @@ function openTool(type){
  const c=configs[type];panel.innerHTML='<h2>'+c[0]+'</h2><textarea id="prompt" placeholder="'+c[2]+'"></textarea><div class="row" style="margin-top:10px"><select id="lang" class="field"><option>الدارجة المغربية</option><option>العربية</option><option>Français</option><option>English</option></select><button class="btn" onclick="askAI()">توليد ✨</button></div><div class="result" id="res">الجواب غادي يبان هنا.</div>';
 }
 function calc(){let a=+document.getElementById('amount').value||0,p=+document.getElementById('pct').value||0;document.getElementById('res').textContent='النسبة: '+(a*p/100).toFixed(2)+'\nالمجموع مع النسبة: '+(a+a*p/100).toFixed(2)+'\nالمبلغ بعد خصم النسبة: '+(a-a*p/100).toFixed(2)}
-async function askAI(){const p=document.getElementById('prompt').value.trim(),lang=document.getElementById('lang').value,res=document.getElementById('res');if(!p){res.textContent='كتب الطلب ديالك الأول.';return}res.textContent='كنوجد الجواب...';try{const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:p,language:lang})});const d=await r.json();res.textContent=d.answer||d.error||'وقع مشكل.'}catch(e){res.textContent='الواجهة خدامة، ولكن خاص ربط مفتاح AI في الاستضافة باش التوليد الحقيقي يخدم.'}}
+async function askAI(){const p=document.getElementById('prompt').value.trim(),lang=document.getElementById('lang').value,res=document.getElementById('res');if(!p){res.textContent='كتب الطلب ديالك الأول.';return}res.textContent='كنوجد الجواب...';try{const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:p,language:lang})});const d=await r.json();res.textContent=d.answer||d.error||'وقع مشكل.'}catch(e){res.textContent='ما جاوبش محرك AI دابا. عاود المحاولة بعد شوية.'}}
 </script>
 </body></html>
