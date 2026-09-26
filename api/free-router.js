@@ -90,28 +90,38 @@ async function callProvider(provider, messages) {
   }
 }
 
-// Last-resort legacy public endpoint. It is intentionally opt-in because
-// anonymous public inference has strict/unstable limits and should not be
-// treated as the production provider. Set ENABLE_PUBLIC_FALLBACK=true only
-// when a temporary keyless demo is needed.
+// Keyless legacy fallback documented by Pollinations.
+// POST is preferred because it preserves system/user roles.
 async function callPublicFallback(messages) {
   if (process.env.ENABLE_PUBLIC_FALLBACK === "false") return { skipped: true };
-
-  const userText = messages.filter(m => m.role === "user").map(m => m.content).join("\n");
-  const systemText = messages.filter(m => m.role === "system").map(m => m.content).join("\n");
-  const prompt = `${systemText}\n\nUtilisateur:\n${userText}`;
 
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 15000);
 
   try {
-    const url = "https://text.pollinations.ai/" + encodeURIComponent(prompt);
-    const response = await fetch(url, { signal: controller.signal });
+    const response = await fetch("https://text.pollinations.ai/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        messages,
+        model: process.env.POLLINATIONS_MODEL || "openai",
+        temperature: 0.4,
+        max_tokens: 1200,
+        private: true
+      }),
+      signal: controller.signal
+    });
+
     const text = await response.text();
     if (!response.ok || !text.trim()) {
       throw new Error(`${response.status}: ${cleanError(text)}`);
     }
-    return { answer: text.trim(), provider: "public-demo", model: "pollinations-legacy" };
+
+    return {
+      answer: text.trim(),
+      provider: "public-demo",
+      model: process.env.POLLINATIONS_MODEL || "openai"
+    };
   } finally {
     clearTimeout(timeout);
   }
