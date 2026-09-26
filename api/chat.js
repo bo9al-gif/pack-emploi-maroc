@@ -1,4 +1,3 @@
-const OpenAI = require("openai");
 const { chatWithFreeFallback } = require("./free-router");
 
 module.exports = async function(req, res) {
@@ -24,19 +23,6 @@ module.exports = async function(req, res) {
       { role: "system", content: system },
       { role: "user", content: prompt }
     ];
-
-    // Use OpenAI only when explicitly configured, otherwise use the free-provider router.
-    if (process.env.OPENAI_API_KEY) {
-      const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-      const response = await client.responses.create({
-        model: process.env.OPENAI_MODEL || "gpt-5-mini",
-        input: messages
-      });
-      return res.status(200).json({
-        answer: response.output_text,
-        provider: "openai"
-      });
-    }
 
     const result = await chatWithFreeFallback(messages);
     return res.status(200).json(result);
