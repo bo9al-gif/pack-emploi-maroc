@@ -1,0 +1,36 @@
+name: Build Android package
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Build Android wrapper
+        run: |
+          npm install -g @bubblewrap/cli
+          mkdir -p twa
+          cat > twa/twa-manifest.json <<'EOF'
+          {
+            "packageId": "ma.packemploi.app",
+            "host": "pack-emploi-maroc.pages.dev",
+            "name": "Pack Emploi Maroc",
+            "launcherName": "Emploi Maroc",
+            "display": "standalone",
+            "themeColor": "#1769aa",
+            "backgroundColor": "#f6f8fb",
+            "startUrl": "/",
+            "iconUrl": "https://pack-emploi-maroc.pages.dev/icon-512.svg",
+            "maskableIconUrl": "https://pack-emploi-maroc.pages.dev/icon-512.svg"
+          }
+          EOF
+          echo "Android packaging requires a verified public HTTPS origin and a signing key. This workflow is intentionally a placeholder until the production domain is confirmed."
