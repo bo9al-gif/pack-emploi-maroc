@@ -7,13 +7,8 @@ const app = express();
 app.use(express.json({ limit: "1mb" }));
 app.use(express.urlencoded({ extended: true, limit: "1mb" }));
 
-function withQuery(req, res, next) {
-  req.query = Object.fromEntries(new URL(req.originalUrl, `http://${req.headers.host || "localhost"}`).searchParams.entries());
-  next();
-}
-
-app.all("/api/chat", withQuery, (req, res) => chatHandler(req, res));
-app.all("/api/public-tools", withQuery, (req, res) => publicToolsHandler(req, res));
+app.all("/api/chat", (req, res) => chatHandler(req, res));
+app.all("/api/public-tools", (req, res) => publicToolsHandler(req, res));
 app.use(express.static(path.join(__dirname)));
 
 const port = Number(process.env.PORT || 10000);
