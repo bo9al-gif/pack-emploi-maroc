@@ -1,86 +1,99 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#111827"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon-192.svg">
-<title>AI Maroc — مساعدك اليومي 🇲🇦</title>
-<meta name="description" content="AI Maroc: مساعد عملي للمستخدمين في المغرب للكتابة والدراسة والترجمة والحساب وطلبات العمل.">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1220">
+<meta name="description" content="AI Maroc — مساعد ذكي عملي للمغرب للكتابة، الدراسة، الترجمة، العمل والحساب.">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icon-192.svg">
+<title>AI Maroc 🇲🇦 — مساعدك الذكي</title>
 <style>
-:root{--bg:#f5f7fb;--card:#fff;--text:#101828;--muted:#667085;--primary:#111827;--accent:#0f766e;--line:#e4e7ec;--soft:#eef8f6}
-*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--text)}
-header{padding:30px 18px 24px;background:linear-gradient(135deg,#111827,#164e63);color:#fff;text-align:center}header .logo{font-size:40px}header h1{margin:6px 0;font-size:34px}header p{max-width:720px;margin:0 auto;color:#d1fae5;line-height:1.7}
-.topbar{max-width:1050px;margin:-12px auto 0;padding:0 18px;position:relative}.nav{background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px;display:flex;gap:8px;flex-wrap:wrap;box-shadow:0 8px 25px #10182810}.nav button{border:0;background:#f2f4f7;color:#344054;border-radius:10px;padding:9px 12px;font-weight:700;cursor:pointer}.nav button.active{background:var(--soft);color:#065f46}
-.container{max-width:1050px;margin:auto;padding:18px}.tools{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.tool{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;text-align:right;cursor:pointer;transition:.15s}.tool:hover{transform:translateY(-2px);box-shadow:0 8px 25px #10182812}.tool b{display:block;font-size:17px;margin:8px 0}.tool span{color:var(--muted);font-size:13px;line-height:1.55}
-.panel{margin-top:18px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px}.panel h2{margin-top:0}.row{display:flex;gap:10px;flex-wrap:wrap}textarea,input,select{width:100%;border:1px solid #d0d5dd;border-radius:12px;padding:13px;font:inherit;background:#fff}textarea{min-height:145px;resize:vertical}.field{flex:1;min-width:180px}.btn{border:0;border-radius:12px;padding:12px 17px;background:var(--primary);color:#fff;font-weight:700;cursor:pointer}.btn.alt{background:#e8f5f2;color:#065f46}.btn.danger{background:#fff0f0;color:#b42318}.btn.light{background:#f2f4f7;color:#344054}.result{white-space:pre-wrap;background:#f8fafc;border:1px solid var(--line);padding:16px;border-radius:14px;line-height:1.7;margin-top:14px;min-height:55px}
-.history-item{display:flex;justify-content:space-between;gap:10px;align-items:center;border:1px solid var(--line);padding:12px;border-radius:12px;margin-top:8px}.history-item button{border:0;background:transparent;color:#065f46;font-weight:700;cursor:pointer;text-align:right;flex:1}.history-actions{display:flex;gap:6px}.history-actions button{flex:0 0 auto;padding:7px 9px;border-radius:9px}.empty{color:var(--muted);padding:12px 0}
-.premium{margin-top:18px;background:linear-gradient(135deg,#ecfdf3,#eff6ff);border:1px solid #b7e4d8;border-radius:18px;padding:18px}.premium b{font-size:18px}.small{font-size:13px;color:var(--muted);line-height:1.6}
-footer{text-align:center;color:var(--muted);padding:28px 18px;font-size:13px}
-@media(max-width:760px){.tools{grid-template-columns:1fr 1fr}header h1{font-size:29px}}@media(max-width:480px){.tools{grid-template-columns:1fr}.nav{justify-content:center}}
+:root{--bg:#f6f8fc;--surface:#fff;--surface2:#f1f5f9;--text:#0f172a;--muted:#64748b;--line:#e2e8f0;--brand:#0f766e;--brand2:#14b8a6;--dark:#0b1220;--danger:#b42318;--shadow:0 12px 35px rgba(15,23,42,.08)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 85% 0,#dff7f1 0,transparent 28%),var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+button,input,textarea,select{font:inherit}.shell{max-width:1120px;margin:auto;padding:0 18px}
+header{background:linear-gradient(135deg,#0b1220 0%,#123b4a 55%,#0f766e 100%);color:#fff;padding:22px 0 54px}
+.headerbar{display:flex;align-items:center;justify-content:space-between;gap:14px}.brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:19px}.brandmark{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:#ffffff16;border:1px solid #ffffff24;font-size:22px}
+.iconbtn{border:1px solid #ffffff2e;background:#ffffff12;color:#fff;border-radius:12px;padding:9px 12px;cursor:pointer}
+.hero{padding-top:42px;display:grid;grid-template-columns:1.3fr .7fr;gap:34px;align-items:center}.hero h1{font-size:clamp(34px,6vw,62px);line-height:1.05;margin:0 0 16px;letter-spacing:-1.5px}.hero h1 span{color:#5eead4}.hero p{font-size:18px;line-height:1.8;color:#dbeafe;max-width:680px;margin:0 0 22px}.hero-actions{display:flex;gap:10px;flex-wrap:wrap}.primary,.secondary{border:0;border-radius:13px;padding:12px 18px;font-weight:800;cursor:pointer}.primary{background:#fff;color:#0f766e}.secondary{background:#ffffff14;color:#fff;border:1px solid #ffffff2b}
+.hero-card{background:#ffffff10;border:1px solid #ffffff22;border-radius:24px;padding:22px;backdrop-filter:blur(12px);box-shadow:0 20px 55px #0003}.hero-card b{font-size:19px}.hero-card p{font-size:14px;margin:8px 0 0}
+.nav{margin-top:-24px;position:relative;z-index:2}.nav-inner{background:var(--surface);border:1px solid var(--line);border-radius:17px;padding:8px;display:flex;gap:7px;flex-wrap:wrap;box-shadow:var(--shadow)}.nav button{border:0;background:transparent;color:#475569;border-radius:10px;padding:9px 12px;font-weight:750;cursor:pointer}.nav button.active,.nav button:hover{background:#e7f7f3;color:#065f46}
+main{padding:25px 0 55px}.section-title{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:0 0 14px}.section-title h2{margin:0;font-size:24px}.section-title p{margin:0;color:var(--muted);font-size:13px}
+.tools{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.tool{border:1px solid var(--line);background:var(--surface);border-radius:18px;padding:18px;text-align:right;cursor:pointer;box-shadow:0 5px 20px #0f172a08;transition:.18s}.tool:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:#b8ddd7}.tool .ico{font-size:25px}.tool b{display:block;margin:10px 0 5px;font-size:16px}.tool span{color:var(--muted);font-size:13px;line-height:1.55}
+.panel{margin-top:18px;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:0 5px 20px #0f172a08}.panel h2{margin:0 0 12px}.label{font-size:13px;font-weight:800;color:#475569;display:block;margin:0 0 7px}.row{display:flex;gap:10px;flex-wrap:wrap}.field{flex:1;min-width:170px}textarea,input,select{width:100%;border:1px solid #cbd5e1;border-radius:13px;padding:13px;outline:none;background:#fff;color:var(--text)}textarea{min-height:155px;resize:vertical}textarea:focus,input:focus,select:focus{border-color:#14b8a6;box-shadow:0 0 0 3px #14b8a61c}.actions{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px;flex-wrap:wrap}.btn{border:0;border-radius:12px;padding:11px 16px;font-weight:800;cursor:pointer;background:var(--dark);color:#fff}.btn.alt{background:#e7f7f3;color:#065f46}.btn.light{background:#f1f5f9;color:#334155}.btn.danger{background:#fff1f2;color:var(--danger)}.counter{font-size:12px;color:var(--muted)}.result{white-space:pre-wrap;background:#f8fafc;border:1px solid var(--line);padding:16px;border-radius:15px;line-height:1.75;margin-top:15px;min-height:58px}.result.loading{color:#475569}.hint{color:var(--muted);font-size:13px;line-height:1.7}
+.history-item{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:13px;padding:10px;margin-top:8px}.history-open{flex:1;border:0;background:transparent;text-align:right;cursor:pointer;color:var(--text)}.history-actions{display:flex;gap:5px}.history-actions button{border:0;border-radius:9px;padding:7px;cursor:pointer}.empty{color:var(--muted);padding:14px 0}
+.plus{margin-top:18px;border-radius:20px;padding:20px;background:linear-gradient(135deg,#ecfdf5,#eff6ff);border:1px solid #b7e4d8}.plus b{font-size:18px}.tag{display:inline-block;margin:6px 4px 0 0;padding:5px 9px;border-radius:99px;background:#fff;border:1px solid #d8e8e5;color:#065f46;font-size:12px}
+footer{border-top:1px solid var(--line);padding:25px 18px;text-align:center;color:var(--muted);font-size:13px}
+@media(max-width:800px){.hero{grid-template-columns:1fr}.hero-card{display:none}.tools{grid-template-columns:1fr 1fr}}@media(max-width:500px){.shell{padding:0 13px}.hero{padding-top:30px}.tools{grid-template-columns:1fr}.nav-inner{justify-content:center}.hero p{font-size:16px}.panel{padding:15px}}
 </style>
 </head>
 <body>
-<header><div class="logo">🇲🇦</div><h1>AI Maroc</h1><p>مساعدك اليومي: كتب، ترجم، قرا، حسب، وجد طلباتك — بالعربية، الدارجة والفرنسية.</p></header>
-<div class="topbar"><div class="nav">
-<button id="homeBtn" class="active" onclick="showHome()">🏠 الرئيسية</button>
-<button onclick="showHistory()">🕘 المحادثات</button>
-<button onclick="openTool('write')">✍️ كتابة</button>
-<button onclick="openTool('study')">📚 دراسة</button>
-<button onclick="openTool('translate')">🌍 ترجمة</button>
-</div></div>
-<main class="container">
-<section id="home">
-<div class="tools">
-<button class="tool" onclick="openTool('write')">✍️<b>كاتب ذكي</b><span>رسائل واتساب، إيميلات، طلبات عمل ورسائل إدارية.</span></button>
-<button class="tool" onclick="openTool('study')">📚<b>مساعد الدراسة</b><span>شرح درس أو تمرين وصناعة أسئلة للمراجعة.</span></button>
-<button class="tool" onclick="openTool('translate')">🌍<b>ترجمة</b><span>العربية، الدارجة، الفرنسية والإنجليزية.</span></button>
-<button class="tool" onclick="openTool('calculate')">🧮<b>حاسبات المغرب</b><span>النسب، الخصم، الربح والمصاريف بالدرهم.</span></button>
-<button class="tool" onclick="openTool('job')">💼<b>طلبات العمل</b><span>صيغ جاهزة للتقديم على وظيفة عبر WhatsApp أو email.</span></button>
-<button class="tool" onclick="openTool('admin')">📄<b>مراسلات إدارية</b><span>طلب، شكاية، تصريح أو مراسلة بصياغة منظمة.</span></button>
-<button class="tool" onclick="openTool('morocco')">🇲🇦<b>مساعد المغرب</b><span>حول طلبك إلى سؤال واضح ومناسب للمغرب.</span></button>
-<button class="tool" onclick="openTool('ideas')">💡<b>أفكار ومحتوى</b><span>أفكار مشاريع، منشورات وإعلانات بصياغة عملية.</span></button>
-<button class="tool" onclick="openTool('cv')">📄<b>CV وطلبات التوظيف</b><span>حسّن السيرة الذاتية ورسالة التقديم.</span></button>
+<header>
+<div class="shell">
+<div class="headerbar"><div class="brand"><div class="brandmark">🇲🇦</div>AI Maroc</div><button class="iconbtn" onclick="showHistory()">🕘 المحادثات</button></div>
+<div class="hero">
+<div><h1>المساعد الذكي <span>ديال المغرب.</span></h1><p>كتب، ترجم، قرا، وجد طلبات العمل، حسب المصاريف وخدم أفكارك — كلشي فواجهة بسيطة وسريعة وباللغة اللي كتفهم.</p><div class="hero-actions"><button class="primary" onclick="focusChat()">ابدأ دابا ✨</button><button class="secondary" onclick="openTool('job')">💼 أدوات العمل</button></div></div>
+<div class="hero-card"><b>مصمم للمستخدم المغربي 🇲🇦</b><p>الدارجة • العربية • Français • English</p><p>حفظ محلي للمحادثات • تصدير نسخة احتياطية • أدوات عملية</p></div>
 </div>
-<div class="premium"><b>⭐ AI Maroc Plus</b><p class="small">واجهة الربح جاهزة للتطوير: ميزات إضافية، قوالب احترافية وحدود استعمال مختلفة. الدفع الحقيقي ما تفعّلش هنا حتى يتم اختيار وسيلة الدفع والتسعير.</p></div>
+</div>
+</header>
+<div class="shell nav"><div class="nav-inner"><button id="homeBtn" class="active" onclick="showHome()">🏠 الرئيسية</button><button onclick="focusChat()">✨ AI</button><button onclick="openTool('write')">✍️ كتابة</button><button onclick="openTool('study')">📚 دراسة</button><button onclick="openTool('translate')">🌍 ترجمة</button><button onclick="showHistory()">🕘 المحفوظات</button></div></div>
+
+<main class="shell">
+<section id="home">
+<div class="section-title"><div><h2>شنو بغيتي دابا؟</h2><p>اختار أداة وابدأ بلا تعقيد.</p></div></div>
+<div class="tools">
+<button class="tool" onclick="openTool('write')"><div class="ico">✍️</div><b>كاتب ذكي</b><span>رسائل، إيميلات، منشورات وطلبات بصياغة جاهزة.</span></button>
+<button class="tool" onclick="openTool('study')"><div class="ico">📚</div><b>مساعد الدراسة</b><span>شرح الدروس، التمارين وأسئلة المراجعة.</span></button>
+<button class="tool" onclick="openTool('translate')"><div class="ico">🌍</div><b>ترجمة</b><span>العربية، الدارجة، الفرنسية والإنجليزية.</span></button>
+<button class="tool" onclick="openTool('job')"><div class="ico">💼</div><b>العمل والتوظيف</b><span>رسائل التقديم، أسئلة المقابلة وتحسين CV.</span></button>
+<button class="tool" onclick="openTool('admin')"><div class="ico">📄</div><b>مراسلات إدارية</b><span>طلبات وشكايات وتصريحات بصياغة منظمة.</span></button>
+<button class="tool" onclick="openTool('morocco')"><div class="ico">🇲🇦</div><b>مساعد المغرب</b><span>صغ سؤالك بطريقة واضحة ومناسبة للسياق المغربي.</span></button>
+<button class="tool" onclick="openTool('ideas')"><div class="ico">💡</div><b>أفكار ومحتوى</b><span>أفكار مشاريع، محتوى وإعلانات عملية.</span></button>
+<button class="tool" onclick="openTool('calculate')"><div class="ico">🧮</div><b>حاسبات DH</b><span>النسب، الخصم والزيادة والميزانية.</span></button>
+<button class="tool" onclick="openTool('cv')"><div class="ico">📄</div><b>CV والتقديم</b><span>حسّن معلومات السيرة ورسالة التقديم.</span></button>
+</div>
+<div class="plus"><b>⭐ AI Maroc Plus</b><p class="hint">البنية جاهزة لإضافة ميزات مدفوعة لاحقاً. الدفع الحقيقي ما متفعلش حالياً، وما غادي يتدار حتى اختيار واضح للتسعير وطريقة الدفع.</p><span class="tag">قوالب احترافية</span><span class="tag">حدود استعمال</span><span class="tag">ميزات إضافية</span></div>
 </section>
-<section class="panel" id="panel"><h2>اختار أداة 👆</h2><p class="small">المحادثات كتتحفظ محلياً فهاد الجهاز والمتصفح. تقدر دابا تصدّرها كنسخة احتياطية أو تمسح محادثة وحدة.</p></section>
+
+<section class="panel" id="panel"><h2>✨ جرّب AI Maroc</h2><p class="hint">كتب أي سؤال أو طلب. الجواب كيتحفظ محلياً فالمتصفح إلا كان ناجحاً.</p><textarea id="quickPrompt" maxlength="8000" placeholder="مثال: صاوب ليا رسالة محترمة باش نطلب خدمة..."></textarea><div class="actions"><span class="counter" id="counter">0 / 8000</span><div class="row"><select id="quickLang" style="width:auto;min-width:170px"><option>الدارجة المغربية</option><option>العربية</option><option>Français</option><option>English</option></select><button class="btn" onclick="askAI('quickPrompt','quickLang','quickResult')">توليد ✨</button></div></div><div class="result" id="quickResult">الجواب غادي يبان هنا.</div></section>
 </main>
-<footer>AI Maroc 🇲🇦 — مساعد يومي قابل للتطوير.</footer>
+<footer>AI Maroc 🇲🇦 — مساعد عملي قابل للتطوير. المعلومات الرسمية والمتغيرة خاصها دائماً التحقق من المصدر الرسمي.</footer>
+
 <script>
-const panel=document.getElementById('panel'),home=document.getElementById('home'),KEY='aiMarocHistory';
+const KEY='aiMarocHistory',MAX=8000,home=document.getElementById('home'),panel=document.getElementById('panel');
 const configs={
-write:['✍️ كاتب ذكي','شنو بغيتي تكتب؟','مثال: بغيت نرسل رسالة محترمة لشركة باش نسول على خدمة.'],
-study:['📚 مساعد الدراسة','كتب الدرس أو التمرين هنا','مثال: شرح لي هاد الفقرة بطريقة بسيطة.'],
-translate:['🌍 ترجمة','النص المراد ترجمته','مثال: Je cherche un emploi.'],
-job:['💼 طلب عمل','شنو الخدمة والمدينة؟','مثال: مساعد إداري في الرباط.'],
-admin:['📄 مراسلة إدارية','شنو نوع الطلب؟','مثال: طلب شهادة إدارية.'],
-morocco:['🇲🇦 مساعد المغرب','شنو المعلومة أو الطلب اللي بغيتي تصيغو؟','مثال: بغيت نعرف شنو خاصني نسول عليه قبل ما نمشي لإدارة.'],
-ideas:['💡 أفكار ومحتوى','شنو المشروع أو المحتوى؟','مثال: عطيني 10 أفكار لمنشورات لمحل صغير.'],
-cv:['📄 CV وطلبات التوظيف','لصق معلومات CV أو عرض العمل هنا','مثال: عندي Bac وكنقلب على خدمة إدارية.']
+write:['✍️ كاتب ذكي','مثال: بغيت رسالة محترمة لشركة نسول فيها على خدمة.'],
+study:['📚 مساعد الدراسة','مثال: شرح لي هاد الدرس بطريقة بسيطة وعطيني 5 أسئلة للمراجعة.'],
+translate:['🌍 ترجمة','مثال: ترجم هاد النص للفرنسية مع الحفاظ على المعنى.'],
+job:['💼 العمل والتوظيف','مثال: بغيت رسالة WhatsApp للتقديم على خدمة مساعد إداري فالرباط.'],
+admin:['📄 مراسلة إدارية','مثال: صاوب ليا طلب شهادة إدارية بصياغة محترمة.'],
+morocco:['🇲🇦 مساعد المغرب','مثال: شنو الأسئلة اللي خاصني نوجد قبل ما نمشي لإدارة؟'],
+ideas:['💡 أفكار ومحتوى','مثال: عطيني 10 أفكار محتوى لمشروع صغير فالمغرب.'],
+cv:['📄 CV والتقديم','مثال: حسن ليا هاد المعلومات ديال CV وخليها احترافية.']
 };
-function setActive(){document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'))}
-function showHome(){home.style.display='block';panel.innerHTML='<h2>اختار أداة 👆</h2><p class="small">المحادثات كتتحفظ محلياً فهاد الجهاز. ما كنرسلهاش لقاعدة بيانات خاصة بالحفظ.</p>';setActive();document.getElementById('homeBtn').classList.add('active')}
+function active(){document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'))}
+function showHome(){home.style.display='block';active();document.getElementById('homeBtn').classList.add('active');window.scrollTo({top:document.querySelector('main').offsetTop-20,behavior:'smooth'})}
+function focusChat(){showHome();setTimeout(()=>document.getElementById('quickPrompt').focus(),120)}
 function openTool(type){
-home.style.display='block';
-if(type==='calculate'){panel.innerHTML='<h2>🧮 حاسبات المغرب</h2><div class="row"><div class="field"><label>المبلغ بالدرهم</label><input id="amount" type="number" placeholder="100"></div><div class="field"><label>النسبة %</label><input id="pct" type="number" placeholder="20"></div></div><div class="row" style="margin-top:10px"><button class="btn" onclick="calc()">احسب</button><button class="btn alt" onclick="budget()">ميزانية بسيطة</button></div><div class="result" id="res">النتيجة غادي تبان هنا.</div>';setActive();return}
-const c=configs[type];panel.innerHTML='<h2>'+c[0]+'</h2><textarea id="prompt" placeholder="'+c[2]+'"></textarea><div class="row" style="margin-top:10px"><select id="lang" class="field"><option>الدارجة المغربية</option><option>العربية</option><option>Français</option><option>English</option></select><button class="btn" onclick="askAI()">توليد ✨</button></div><div class="result" id="res">الجواب غادي يبان هنا.</div>';
-setActive();
-}
-function calc(){let a=+document.getElementById('amount').value||0,p=+document.getElementById('pct').value||0;document.getElementById('res').textContent='قيمة النسبة: '+(a*p/100).toFixed(2)+' DH\nالمجموع مع الزيادة: '+(a+a*p/100).toFixed(2)+' DH\nالمبلغ بعد الخصم: '+(a-a*p/100).toFixed(2)+' DH'}
-function budget(){panel.innerHTML='<h2>🧾 ميزانية بسيطة</h2><div class="row"><div class="field"><label>الدخل الشهري DH</label><input id="income" type="number" placeholder="4000"></div><div class="field"><label>الكراء DH</label><input id="rent" type="number" placeholder="1500"></div><div class="field"><label>الأكل DH</label><input id="food" type="number" placeholder="1000"></div><div class="field"><label>المواصلات DH</label><input id="transport" type="number" placeholder="400"></div></div><button class="btn" onclick="calcBudget()">احسب الباقي</button><div class="result" id="res">النتيجة غادي تبان هنا.</div>'}
-function calcBudget(){const n=id=>+document.getElementById(id).value||0;const income=n('income'),spent=n('rent')+n('food')+n('transport');document.getElementById('res').textContent='المصاريف الأساسية: '+spent.toFixed(2)+' DH\nالباقي: '+(income-spent).toFixed(2)+' DH\nملاحظة: هادي حسبة فقط وماشي نصيحة مالية.'}
-async function askAI(){const p=document.getElementById('prompt').value.trim(),lang=document.getElementById('lang').value,res=document.getElementById('res');if(!p){res.textContent='كتب الطلب ديالك الأول.';return}res.textContent='كنوجد الجواب...';try{const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:p,language:lang})});const d=await r.json();const answer=d.answer||d.error||'وقع مشكل.';res.textContent=answer;if(d.answer)saveChat(p,answer,lang)}catch(e){res.textContent='ما جاوبش محرك AI دابا. عاود المحاولة بعد شوية.'}}
-function getHistory(){try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch{return[]}}
-function saveChat(prompt,answer,lang){const h=getHistory();h.unshift({id:Date.now(),prompt,answer,lang,date:new Date().toLocaleString('fr-MA')});localStorage.setItem(KEY,JSON.stringify(h.slice(0,30)))}
-function showHistory(){
-setActive();home.style.display='none';const h=getHistory();
-panel.innerHTML='<h2>🕘 المحادثات المحفوظة</h2><div class="row"><button class="btn alt" onclick="exportHistory()">⬇️ تصدير نسخة</button><button class="btn light" onclick="importHistory()">⬆️ استرجاع نسخة</button></div>'+(h.length?h.map((x,i)=>'<div class="history-item"><button onclick="viewHistory('+i+')">'+escapeHtml(x.prompt.slice(0,90))+'<br><span class="small">'+escapeHtml(x.date)+'</span></button><div class="history-actions"><button class="btn danger" onclick="deleteChat('+i+')" title="حذف">🗑️</button></div></div>').join(''):'<div class="empty">مازال ما كاين حتى محادثة محفوظة.</div>')+(h.length?'<button class="btn danger" style="margin-top:14px" onclick="clearHistory()">مسح الكل</button>':'');
-}
-function viewHistory(i){const h=getHistory(),x=h[i];if(!x)return;home.style.display='none';panel.innerHTML='<h2>💬 المحادثة</h2><p><b>السؤال:</b> '+escapeHtml(x.prompt)+'</p><div class="result">'+escapeHtml(x.answer)+'</div><button class="btn alt" style="margin-top:10px" onclick="showHistory()">رجوع</button>'}
+if(type==='calculate'){panel.innerHTML='<h2>🧮 حاسبات DH</h2><div class="row"><div class="field"><label class="label">المبلغ</label><input id="amount" type="number" min="0" placeholder="1000"></div><div class="field"><label class="label">النسبة %</label><input id="pct" type="number" placeholder="20"></div></div><div class="actions"><button class="btn" onclick="calc()">احسب</button><button class="btn alt" onclick="budget()">ميزانية</button></div><div class="result" id="toolResult">النتيجة غادي تبان هنا.</div>';return scrollPanel()}
+const c=configs[type]||configs.write;panel.innerHTML='<h2>'+c[0]+'</h2><textarea id="toolPrompt" maxlength="8000" placeholder="'+c[1]+'"></textarea><div class="actions"><span class="counter" id="toolCounter">0 / 8000</span><div class="row"><select id="toolLang" style="width:auto;min-width:170px"><option>الدارجة المغربية</option><option>العربية</option><option>Français</option><option>English</option></select><button class="btn" onclick="askAI(\'toolPrompt\',\'toolLang\',\'toolResult\')">توليد ✨</button></div></div><div class="result" id="toolResult">الجواب غادي يبان هنا.</div>';bindCounter('toolPrompt','toolCounter');scrollPanel()}
+function scrollPanel(){setTimeout(()=>panel.scrollIntoView({behavior:'smooth',block:'start'}),30)}
+function calc(){const a=+document.getElementById('amount').value||0,p=+document.getElementById('pct').value||0;document.getElementById('toolResult').textContent='قيمة النسبة: '+(a*p/100).toFixed(2)+' DH\nبعد الزيادة: '+(a+a*p/100).toFixed(2)+' DH\nبعد الخصم: '+(a-a*p/100).toFixed(2)+' DH'}
+function budget(){panel.innerHTML='<h2>🧾 ميزانية شهرية</h2><div class="row"><div class="field"><label class="label">الدخل DH</label><input id="income" type="number" placeholder="4000"></div><div class="field"><label class="label">الكراء DH</label><input id="rent" type="number" placeholder="1500"></div><div class="field"><label class="label">الأكل DH</label><input id="food" type="number" placeholder="1000"></div><div class="field"><label class="label">المواصلات DH</label><input id="transport" type="number" placeholder="400"></div></div><div class="actions"><button class="btn" onclick="calcBudget()">احسب الباقي</button></div><div class="result" id="toolResult">النتيجة غادي تبان هنا.</div>';scrollPanel()}
+function calcBudget(){const n=id=>+document.getElementById(id).value||0;const spent=n('rent')+n('food')+n('transport');document.getElementById('toolResult').textContent='المصاريف: '+spent.toFixed(2)+' DH\nالباقي: '+(n('income')-spent).toFixed(2)+' DH\nملاحظة: حسبة فقط، ماشي نصيحة مالية.'}
+async function askAI(pid,lid,rid){const input=document.getElementById(pid),res=document.getElementById(rid),p=input.value.trim(),lang=document.getElementById(lid).value;if(!p){res.textContent='كتب الطلب ديالك الأول.';input.focus();return}res.classList.add('loading');res.textContent='كنوجد الجواب...';try{const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),25000);const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:p,language:lang}),signal:controller.signal});clearTimeout(timer);let d={};try{d=await r.json()}catch{}if(!r.ok)throw new Error(d.error||'تعذر الحصول على جواب');const answer=d.answer||d.error||'ما وصلنا حتى جواب.';res.textContent=answer;if(d.answer)saveChat(p,answer,lang)}catch(e){res.textContent=e.name==='AbortError'?'الطلب خد وقت طويل. عاود المحاولة.':(e.message||'وقع مشكل.')}finally{res.classList.remove('loading')}}
+function getHistory(){try{const h=JSON.parse(localStorage.getItem(KEY)||'[]');return Array.isArray(h)?h:[]}catch{return[]}}
+function saveChat(prompt,answer,lang){const h=getHistory();h.unshift({id:Date.now()+Math.random(),prompt,answer,lang,date:new Date().toLocaleString('fr-MA')});localStorage.setItem(KEY,JSON.stringify(h.slice(0,50)))}
+function showHistory(){active();home.style.display='none';panel.innerHTML='<h2>🕘 المحادثات المحفوظة</h2><div class="actions"><div class="row"><button class="btn alt" onclick="exportHistory()">⬇️ تصدير</button><button class="btn light" onclick="importHistory()">⬆️ استرجاع</button></div><button class="btn danger" onclick="clearHistory()">مسح الكل</button></div>';const h=getHistory();panel.innerHTML+=h.length?h.map((x,i)=>'<div class="history-item"><button class="history-open" onclick="viewHistory('+i+')"><b>'+escapeHtml(x.prompt.slice(0,90))+'</b><br><span class="hint">'+escapeHtml(x.date)+'</span></button><div class="history-actions"><button class="btn danger" onclick="deleteChat('+i+')">🗑️</button></div></div>').join(''):'<div class="empty">مازال ما كاين حتى محادثة محفوظة.</div>';scrollPanel()}
+function viewHistory(i){const x=getHistory()[i];if(!x)return;panel.innerHTML='<h2>💬 المحادثة</h2><p><b>السؤال:</b> '+escapeHtml(x.prompt)+'</p><div class="result">'+escapeHtml(x.answer)+'</div><div class="actions"><button class="btn alt" onclick="showHistory()">رجوع</button></div>';scrollPanel()}
 function deleteChat(i){const h=getHistory();h.splice(i,1);localStorage.setItem(KEY,JSON.stringify(h));showHistory()}
-function clearHistory(){if(confirm('واش متأكد بغيتي تمسح المحادثات المحفوظة؟')){localStorage.removeItem(KEY);showHistory()}}
-function exportHistory(){const data=JSON.stringify(getHistory(),null,2),blob=new Blob([data],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='ai-maroc-history.json';a.click();URL.revokeObjectURL(url)}
-function importHistory(){const input=document.createElement('input');input.type='file';input.accept='.json,application/json';input.onchange=()=>{const f=input.files[0];if(!f)return;const reader=new FileReader();reader.onload=()=>{try{const incoming=JSON.parse(reader.result);if(!Array.isArray(incoming))throw new Error();const merged=[...incoming,...getHistory()].filter((x,i,a)=>x&&x.prompt&&x.answer&&a.findIndex(y=>y.id===x.id)===i).slice(0,30);localStorage.setItem(KEY,JSON.stringify(merged));showHistory()}catch{alert('الملف غير صالح.')}};reader.readAsText(f)};input.click()}
+function clearHistory(){if(!getHistory().length)return;if(confirm('واش متأكد بغيتي تمسح جميع المحادثات؟')){localStorage.removeItem(KEY);showHistory()}}
+function exportHistory(){const blob=new Blob([JSON.stringify(getHistory(),null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='ai-maroc-history.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
+function importHistory(){const input=document.createElement('input');input.type='file';input.accept='.json,application/json';input.onchange=()=>{const f=input.files&&input.files[0];if(!f)return;const reader=new FileReader();reader.onload=()=>{try{const incoming=JSON.parse(reader.result);if(!Array.isArray(incoming))throw 0;const all=[...incoming,...getHistory()].filter(x=>x&&x.prompt&&x.answer),seen=new Set(),merged=all.filter(x=>{const k=String(x.id||x.prompt);if(seen.has(k))return false;seen.add(k);return true}).slice(0,50);localStorage.setItem(KEY,JSON.stringify(merged));showHistory()}catch{alert('الملف غير صالح.')}};reader.readAsText(f)};input.click()}
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
-if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));
+function bindCounter(pid,cid){const a=document.getElementById(pid),c=document.getElementById(cid);if(a&&c){const f=()=>c.textContent=a.value.length+' / '+MAX;a.addEventListener('input',f);f()}}
+bindCounter('quickPrompt','counter');if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));
 </script>
-</body></html>
+</body>
+</html>
