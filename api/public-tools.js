@@ -25,7 +25,7 @@ if(type==="rates"){
 }
 if(type==="books"){
  const q=String(req.query.q||"").trim().slice(0,120);if(!q)return json(res,400,{error:"q required"});
- return json(res,200,await get("https://openlibrary.org/search.json?q="+encodeURIComponent(q)+"&limit=8&fields=key,title,author_name,first_publish_year,cover_i",{"User-Agent":"AI-Maroc/1.0 github.com/bo9al-gif/pack-emploi-maroc"}));
+ return json(res,200,await get("(process.env.BOOKS_API_BASE||"https://openlibrary.org/search.json")+"?q=""+encodeURIComponent(q)+"&limit=8&fields=key,title,author_name,first_publish_year,cover_i",{"User-Agent":"AI-Maroc/1.0 github.com/bo9al-gif/pack-emploi-maroc"}));
 }
 if(type==="jobs"){
  const data=await get("https://www.arbeitnow.com/api/job-board-api"),items=Array.isArray(data)?data:(data.data||[]);
@@ -34,6 +34,6 @@ if(type==="jobs"){
 }
 if(type==="geocode"){
  const q=String(req.query.q||"").trim().slice(0,120);if(!q)return json(res,400,{error:"q required"});
- return json(res,200,{source:"OpenStreetMap Nominatim",attribution:"© OpenStreetMap contributors",results:await get("https://nominatim.openstreetmap.org/search?format=jsonv2&limit=5&countrycodes=ma&q="+encodeURIComponent(q),{"User-Agent":"AI-Maroc/1.0 github.com/bo9al-gif/pack-emploi-maroc"})});
+ return json(res,200,{source:"OpenStreetMap Nominatim",attribution:"© OpenStreetMap contributors",results:await get("(process.env.GEOCODER_BASE||"https://nominatim.openstreetmap.org/search")+"?format=jsonv2&limit=5&countrycodes=ma&q="+encodeURIComponent(q),{"User-Agent":"AI-Maroc/1.0 github.com/bo9al-gif/pack-emploi-maroc"})});
 }
 }catch(e){return json(res,502,{error:"الخدمة الخارجية ما جاوباتش دابا.",details:e.message})}}
