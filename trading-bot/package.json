@@ -1,0 +1,10 @@
+{
+  "name": "ai-maroc-binance-testnet-bot",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Safe Binance Spot Testnet bot for AI Maroc",
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "start": "node server.js"
+  }
+}
