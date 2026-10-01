@@ -13,6 +13,6 @@ test('signQuery returns a deterministic HMAC SHA-256 signature', () => {
   const signature = signQuery('symbol=BTCUSDT&side=BUY', 'test-secret');
   assert.equal(
     signature,
-    '7c7f7c9b0a4c6d1f0d0a3d6e4b5e2c4e4c2f5f4d6e7d7a9b0e4a4a5f6a8b4b2'
+    '8dc57f0ead8c0dfaf1104c57934ec49e1ba5d5293f8a6e3a492c2a9842a5287e'
   );
 });
