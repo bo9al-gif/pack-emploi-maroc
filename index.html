@@ -32,12 +32,12 @@ footer{border-top:1px solid var(--line);padding:25px 18px;text-align:center;colo
 <div class="shell">
 <div class="headerbar"><div class="brand"><div class="brandmark">🇲🇦</div>AI Maroc</div><button class="iconbtn" onclick="showHistory()">🕘 المحادثات</button></div>
 <div class="hero">
-<div><h1>المساعد الذكي <span>ديال المغرب.</span></h1><p>كتب، ترجم، قرا، وجد طلبات العمل، حسب المصاريف وخدم أفكارك — كلشي فواجهة بسيطة وسريعة وباللغة اللي كتفهم.</p><div class="hero-actions"><button class="primary" onclick="focusChat()">ابدأ دابا ✨</button><button class="secondary" onclick="openTool('job')">💼 أدوات العمل</button><a class="secondary" href="/public-tools.html" style="text-decoration:none">🧰 أدوات مجانية</a></div></div>
+<div><h1>المساعد الذكي <span>ديال المغرب.</span></h1><p>كتب، ترجم، قرا، وجد طلبات العمل، حسب المصاريف وخدم أفكارك — وكلما كان عندك احتياج عملي، تقدر تلقى خدمة رقمية جاهزة من AI Maroc.</p><div class="hero-actions"><button class="primary" onclick="focusChat()">ابدأ دابا ✨</button><button class="secondary" onclick="openTool('job')">💼 أدوات العمل</button><button class="secondary" onclick="showSales()">💰 الخدمات والعروض</button><a class="secondary" href="https://ppm79b-za.myshopify.com/products/pack-emploi-maroc-cv-candidatures-2" target="_blank" rel="noopener" style="text-decoration:none">📦 Pack Emploi 49 MAD</a></div></div>
 <div class="hero-card"><b>مصمم للمستخدم المغربي 🇲🇦</b><p>الدارجة • العربية • Français • English</p><p>حفظ محلي للمحادثات • تصدير نسخة احتياطية • أدوات عملية</p></div>
 </div>
 </div>
 </header>
-<div class="shell nav"><div class="nav-inner"><button id="homeBtn" class="active" onclick="showHome()">🏠 الرئيسية</button><button onclick="focusChat()">✨ AI</button><button onclick="openTool('write')">✍️ كتابة</button><button onclick="openTool('study')">📚 دراسة</button><button onclick="openTool('translate')">🌍 ترجمة</button><button onclick="showHistory()">🕘 المحفوظات</button></div></div>
+<div class="shell nav"><div class="nav-inner"><button id="homeBtn" class="active" onclick="showHome()">🏠 الرئيسية</button><button onclick="focusChat()">✨ AI</button><button onclick="openTool('write')">✍️ كتابة</button><button onclick="openTool('study')">📚 دراسة</button><button onclick="openTool('translate')">🌍 ترجمة</button><button onclick="showSales()">💰 الربح</button><button onclick="showHistory()">🕘 المحفوظات</button></div></div>
 
 <main class="shell">
 <section id="home">
@@ -53,7 +53,7 @@ footer{border-top:1px solid var(--line);padding:25px 18px;text-align:center;colo
 <button class="tool" onclick="openTool('calculate')"><div class="ico">🧮</div><b>حاسبات DH</b><span>النسب، الخصم والزيادة والميزانية.</span></button>
 <button class="tool" onclick="openTool('cv')"><div class="ico">📄</div><b>CV والتقديم</b><span>حسّن معلومات السيرة ورسالة التقديم.</span></button><a class="tool" href="/public-tools.html" style="text-decoration:none;color:inherit"><div class="ico">🧰</div><b>أدوات مجانية</b><span>طقس، صرف العملات، كتب، وظائف ومواقع فالمغرب بلا API key.</span></a>
 </div>
-<div class="plus"><b>⭐ AI Maroc Plus</b><p class="hint">البنية جاهزة لإضافة ميزات مدفوعة لاحقاً. الدفع الحقيقي ما متفعلش حالياً، وما غادي يتدار حتى اختيار واضح للتسعير وطريقة الدفع.</p><span class="tag">قوالب احترافية</span><span class="tag">حدود استعمال</span><span class="tag">ميزات إضافية</span></div>
+<div class="plus"><b>💰 عروض رقمية جاهزة</b><p class="hint">اختار الخدمة أو المنتج المناسب وخذ الخطوة التالية مباشرة.</p><div class="row" style="margin-top:12px"><a class="btn alt" href="https://ppm79b-za.myshopify.com/products/cv-personnalise-pack-candidature" target="_blank" rel="noopener" style="text-decoration:none">CV personnalisé — 79 MAD</a><a class="btn alt" href="https://ppm79b-za.myshopify.com/products/recherche-emploi-assistee-maroc-pack-1-dossier" target="_blank" rel="noopener" style="text-decoration:none">Recherche Emploi — 149 MAD</a><a class="btn" href="https://ppm79b-za.myshopify.com/products/ai-business-audit-maroc-diagnostic-plan-daction" target="_blank" rel="noopener" style="text-decoration:none">AI Business Audit — 199 MAD</a></div></div>
 </section>
 
 <section class="panel" id="services">
@@ -87,6 +87,7 @@ cv:['📄 CV والتقديم','مثال: حسن ليا هاد المعلوما�
 };
 function active(){document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'))}
 function showHome(){home.style.display='block';active();document.getElementById('homeBtn').classList.add('active');window.scrollTo({top:document.querySelector('main').offsetTop-20,behavior:'smooth'})}
+function showSales(){home.style.display='block';active();document.querySelectorAll('.nav button').forEach(x=>{if(x.textContent.includes('الربح'))x.classList.add('active')});setTimeout(()=>document.getElementById('services').scrollIntoView({behavior:'smooth',block:'start'}),30)}
 function focusChat(){showHome();setTimeout(()=>document.getElementById('quickPrompt').focus(),120)}
 function openTool(type){
 if(type==='calculate'){panel.innerHTML='<h2>🧮 حاسبات DH</h2><div class="row"><div class="field"><label class="label">المبلغ</label><input id="amount" type="number" min="0" placeholder="1000"></div><div class="field"><label class="label">النسبة %</label><input id="pct" type="number" placeholder="20"></div></div><div class="actions"><button class="btn" onclick="calc()">احسب</button><button class="btn alt" onclick="budget()">ميزانية</button></div><div class="result" id="toolResult">النتيجة غادي تبان هنا.</div>';return scrollPanel()}
