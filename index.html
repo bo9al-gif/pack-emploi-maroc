@@ -110,5 +110,13 @@ function speakText(text){if(!('speechSynthesis'in window))return alert('الصو
 function bindCounter(pid,cid){const a=document.getElementById(pid),c=document.getElementById(cid);if(a&&c){const f=()=>c.textContent=a.value.length+' / '+MAX;a.addEventListener('input',f);f()}}
 bindCounter('quickPrompt','counter');if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));
 </script>
+<script>
+(function(e,a,d,i,c,t=a.createElement(d)){
+  e[c]=e[c]||function(){(e[c].q=e[c].q||[]).push(arguments)};
+  t.src=i;t.async=1;
+  a.body.insertAdjacentElement("beforeend",t)
+})(window,document,"script","https://bubble.quickchat.ai/chat.js","_quickchat");
+_quickchat("init","p5i973siem");
+</script>
 </body>
 </html>
