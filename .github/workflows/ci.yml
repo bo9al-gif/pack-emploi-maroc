@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  syntax:
+  syntax-and-tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -19,3 +19,4 @@ jobs:
       - run: node --check api/chat.js
       - run: node --check api/free-router.js
       - run: node --check api/public-tools.js
+      - run: npm test
