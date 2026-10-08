@@ -2,7 +2,7 @@
 
 ## Offer
 - Main product: Pack Emploi Maroc — CV & Candidatures
-- Price: 29 MAD
+- Price: 49 MAD
 - Delivery: digital PDF through Shopify Digital Products
 - Payment: Shopify checkout with the store's configured PayPal method
 
