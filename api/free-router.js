@@ -140,7 +140,7 @@ async function callPublicFallback(messages, timeoutMs) {
 async function chatWithFreeFallback(messages) {
   const errors = [];
   // Keep the server-side budget below the frontend's 25s AbortController timeout.
-  const routerTimeoutMs = positiveTimeout("AI_ROUTER_TIMEOUT_MS", 22000, 24000);
+  const routerTimeoutMs = positiveTimeout("AI_ROUTER_TIMEOUT_MS", 20000, 22000);
   const providerTimeoutMs = positiveTimeout("AI_PROVIDER_TIMEOUT_MS", 7000, 10000);
   const publicFallbackTimeoutMs = positiveTimeout("AI_PUBLIC_FALLBACK_TIMEOUT_MS", 5000, 8000);
   const deadline = Date.now() + routerTimeoutMs;
