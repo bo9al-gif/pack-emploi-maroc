@@ -36,13 +36,23 @@ const PROVIDERS = [
   }
 ];
 
+function positiveTimeout(envName, fallback, max) {
+  const value = Number(process.env[envName]);
+  if (!Number.isFinite(value) || value <= 0) return fallback;
+  return Math.min(Math.floor(value), max);
+}
+
+function remainingMs(deadline) {
+  return Math.max(0, deadline - Date.now());
+}
+
 function cleanError(value) {
   if (!value) return "Unknown provider error";
   if (typeof value === "string") return value.slice(0, 300);
   return JSON.stringify(value).slice(0, 300);
 }
 
-async function callProvider(provider, messages) {
+async function callProvider(provider, messages, timeoutMs) {
   const apiKey = process.env[provider.key];
   if (!apiKey) return { skipped: true };
 
@@ -58,7 +68,7 @@ async function callProvider(provider, messages) {
   }
 
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 18000);
+  const timeout = setTimeout(() => controller.abort(), Math.max(1, timeoutMs));
 
   try {
     const response = await fetch(`${provider.baseURL}/chat/completions`, {
@@ -92,11 +102,11 @@ async function callProvider(provider, messages) {
 
 // Keyless legacy fallback documented by Pollinations.
 // POST is preferred because it preserves system/user roles.
-async function callPublicFallback(messages) {
+async function callPublicFallback(messages, timeoutMs) {
   if (process.env.ENABLE_PUBLIC_FALLBACK === "false") return { skipped: true };
 
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 15000);
+  const timeout = setTimeout(() => controller.abort(), Math.max(1, timeoutMs));
 
   try {
     const response = await fetch("https://text.pollinations.ai/", {
@@ -129,10 +139,18 @@ async function callPublicFallback(messages) {
 
 async function chatWithFreeFallback(messages) {
   const errors = [];
+  // Keep the server-side budget below the frontend's 25s AbortController timeout.
+  const routerTimeoutMs = positiveTimeout("AI_ROUTER_TIMEOUT_MS", 22000, 24000);
+  const providerTimeoutMs = positiveTimeout("AI_PROVIDER_TIMEOUT_MS", 7000, 10000);
+  const publicFallbackTimeoutMs = positiveTimeout("AI_PUBLIC_FALLBACK_TIMEOUT_MS", 5000, 8000);
+  const deadline = Date.now() + routerTimeoutMs;
 
   for (const provider of PROVIDERS) {
+    const remaining = remainingMs(deadline);
+    if (remaining <= 0) break;
+
     try {
-      const result = await callProvider(provider, messages);
+      const result = await callProvider(provider, messages, Math.min(providerTimeoutMs, remaining));
       if (result.skipped) continue;
       return result;
     } catch (error) {
@@ -140,11 +158,17 @@ async function chatWithFreeFallback(messages) {
     }
   }
 
-  try {
-    const result = await callPublicFallback(messages);
-    if (!result.skipped) return result;
-  } catch (error) {
-    errors.push(`public-demo: ${error.message}`);
+  const remaining = remainingMs(deadline);
+  if (remaining > 0) {
+    try {
+      const result = await callPublicFallback(
+        messages,
+        Math.min(publicFallbackTimeoutMs, remaining)
+      );
+      if (!result.skipped) return result;
+    } catch (error) {
+      errors.push(`public-demo: ${error.message}`);
+    }
   }
 
   const error = new Error("No configured AI provider is available.");
