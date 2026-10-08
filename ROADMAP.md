@@ -1,27 +1,26 @@
-# Pack Emploi Maroc — Roadmap technique
+# AI Maroc — Roadmap technique
 
-## Déjà intégré
-- Landing page
-- Pack CV/candidatures
-- CV Builder
-- Sauvegarde locale
-- Export PDF via impression navigateur
-- Interface française + arabe RTL
-- 3 modèles de CV
-- Analyse locale de mots-clés ATS
-- Suivi local des candidatures
-- Documentation d'attribution open-source
+## État actuel
+- Landing page AI Maroc
+- Pack CV/candidatures + catalogue digital
+- CV Builder + suivi local des candidatures
+- Sauvegarde locale, export/import JSON et export PDF navigateur
+- Interface arabe RTL + français
+- Backend Node/Express actif
+- Endpoint `/api/chat` avec validation, rate limit et fallback multi-provider
+- Endpoint `/api/public-tools` pour météo, devises, livres, emplois et géocodage
+- CI GitHub Actions avec syntax checks + tests Node
+- Production sur Vercel
 
-## Étape serveur
-1. Déployer les pages statiques.
-2. Ajouter un backend pour les commandes et webhooks uniquement si nécessaire.
-3. Ajouter un stockage sécurisé des commandes.
-4. Ajouter la livraison numérique après paiement confirmé.
-5. Ajouter l'IA côté serveur seulement avec une clé secrète en variable d'environnement.
-6. Ajouter des logs minimaux et une protection anti-abus.
+## Priorités techniques
+1. Réduire la latence et améliorer la résilience du fallback AI.
+2. Remplacer le rate limit mémoire par une protection partagée si le trafic devient réel.
+3. Ajouter un stockage serveur des comptes/conversations seulement avec une architecture de confidentialité claire.
+4. Ajouter des tests d'intégration ciblés autour des APIs externes et du parcours mobile.
+5. Nettoyer les contenus marketing/documentaires pour qu'ils restent synchronisés avec Shopify.
 
 ## Paiement
-Le compte Stripe connecté peut être utilisé pour préparer l'intégration, mais le lancement ne doit pas supposer qu'un compte marchand Stripe marocain est disponible. Stripe ne liste actuellement pas le Maroc parmi ses pays/régions pris en charge pour les paiements. Vérifier le pays légal du marchand et le moyen de paiement réellement disponible avant activation.
+La boutique utilise Shopify comme parcours de checkout avec les moyens de paiement configurés dans le magasin. Toute modification de paiement, abonnement ou facturation doit être validée séparément avant activation.
 
 ## Règle de sécurité
-Aucune clé secrète ne doit être commitée dans GitHub.
+Aucune clé secrète, token, mot de passe ou identifiant de paiement ne doit être commitée dans GitHub.
