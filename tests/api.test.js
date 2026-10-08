@@ -147,6 +147,40 @@ test('chat uses the public fallback when no provider keys are configured', async
   }
 });
 
+
+
+test('AI router stops trying providers after the total time budget is exhausted', async () => {
+  clearProviderEnv();
+  for (const key of PROVIDER_KEYS) process.env[key] = 'test-key';
+
+  const originalFetch = global.fetch;
+  const originalNow = Date.now;
+  let now = 0;
+  const calls = [];
+  Date.now = () => now;
+  global.fetch = async (url) => {
+    calls.push(String(url));
+    now = 200;
+    return makeResponse(503, { error: { message: 'busy' } });
+  };
+  process.env.AI_ROUTER_TIMEOUT_MS = '100';
+
+  try {
+    const { chatWithFreeFallback } = require('../api/free-router');
+    await assert.rejects(
+      () => chatWithFreeFallback([{ role: 'user', content: 'budget test' }]),
+      /No configured AI provider is available/
+    );
+    assert.equal(calls.length, 1);
+    assert.ok(calls[0].includes('api.groq.com'));
+  } finally {
+    global.fetch = originalFetch;
+    Date.now = originalNow;
+    delete process.env.AI_ROUTER_TIMEOUT_MS;
+    clearProviderEnv();
+  }
+});
+
 test('chat rate-limits the 13th request from the same client within a minute', async () => {
   clearProviderEnv();
   const originalFetch = global.fetch;
