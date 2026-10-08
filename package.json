@@ -3,7 +3,8 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "node tests/sales-funnel.test.js"
   },
   "dependencies": {
     "express": "^5.1.0"
