@@ -1,8 +1,11 @@
 name: Deploy Pack Emploi Maroc to GitHub Pages
 
+# GitHub Pages is not the production deployment path.
+# Production is deployed from GitHub main to Vercel.
+# Keep this workflow manual-only so an unconfigured Pages site does not create
+# a failing check on every production commit.
+
 on:
-  push:
-    branches: ["main"]
   workflow_dispatch:
 
 permissions:
