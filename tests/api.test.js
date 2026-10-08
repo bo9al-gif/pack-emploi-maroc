@@ -149,6 +149,58 @@ test('chat uses the public fallback when no provider keys are configured', async
 
 
 
+
+
+test('chat runs live context lookups concurrently before calling the AI provider', async () => {
+  clearProviderEnv();
+  process.env.GROQ_API_KEY = 'test-groq-key';
+
+  const originalFetch = global.fetch;
+  let active = 0;
+  let maxActive = 0;
+
+  global.fetch = async (url) => {
+    active += 1;
+    maxActive = Math.max(maxActive, active);
+    try {
+      await new Promise(resolve => setTimeout(resolve, 15));
+      const value = String(url);
+
+      if (value.includes('api.frankfurter.dev')) {
+        return makeResponse(200, { base: 'EUR', rates: { MAD: 10, USD: 1.1 } });
+      }
+      if (value.includes('openlibrary.org')) {
+        return makeResponse(200, { docs: [{ title: 'Test Book' }] });
+      }
+      if (value.includes('arbeitnow.com')) {
+        return makeResponse(200, { data: [{ title: 'Test Job' }] });
+      }
+      if (value.includes('api.groq.com')) {
+        return makeResponse(200, {
+          choices: [{ message: { content: 'Groq answer' } }]
+        });
+      }
+
+      throw new Error('unexpected external call: ' + value);
+    } finally {
+      active -= 1;
+    }
+  };
+
+  try {
+    const handler = require('../api/chat');
+    const res = makeRes();
+    await handler(makeReq('exchange books jobs', 'test-live-context-concurrency-1'), res);
+
+    assert.equal(res.code, 200);
+    assert.equal(JSON.parse(res.body).answer, 'Groq answer');
+    assert.ok(maxActive >= 3, 'live context lookups should overlap');
+  } finally {
+    global.fetch = originalFetch;
+    clearProviderEnv();
+  }
+});
+
 test('AI router stops trying providers after the total time budget is exhausted', async () => {
   clearProviderEnv();
   for (const key of PROVIDER_KEYS) process.env[key] = 'test-key';
