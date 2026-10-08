@@ -35,6 +35,7 @@ function makeRes() {
     body: null,
     status(code) { this.code = code; return this; },
     setHeader(name, value) { this.headers[name] = value; return this; },
+    json(value) { this.body = JSON.stringify(value); return this; },
     end(value) { this.body = value; return this; }
   };
 }
