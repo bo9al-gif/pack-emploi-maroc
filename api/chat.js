@@ -8,12 +8,13 @@ function limited(req, limit = 12, windowMs = 60000) {
   const now = Date.now();
   const a = (hits.get(key) || []).filter(t => now - t < windowMs);
   if (a.length >= limit) { hits.set(key, a); return true; }
-  a.push(now); hits.set(key, a); return false;
+  a.push(now); hits.set(key, a);
+  return false;
 }
 
-async function external(url, headers = {}) {
+async function external(url, headers = {}, timeoutMs = 2500) {
   const c = new AbortController();
-  const t = setTimeout(() => c.abort(), 7000);
+  const t = setTimeout(() => c.abort(), Math.max(1, timeoutMs));
   try {
     const r = await fetch(url, { headers, signal: c.signal });
     if (!r.ok) throw new Error(String(r.status));
@@ -23,24 +24,44 @@ async function external(url, headers = {}) {
 
 async function liveContext(prompt) {
   const p = prompt.toLowerCase();
-  const out = [];
-  try {
-    if (/صرف|عملة|دولار|يورو|درهم|exchange|currency|eur|usd/.test(p)) {
-      const d = await external("https://api.frankfurter.dev/v2/rates?base=EUR&quotes=MAD,USD");
-      out.push("بيانات صرف حديثة من Frankfurter: " + JSON.stringify(d));
-    }
-    if (/كتاب|كتب|رواية|book|books/.test(p)) {
-      const q = encodeURIComponent(prompt.slice(0, 80));
-      const d = await external("https://openlibrary.org/search.json?q=" + q + "&limit=5&fields=title,author_name,first_publish_year");
-      out.push("نتائج كتب من Open Library: " + JSON.stringify(d.docs || []));
-    }
-    if (/وظيف|عمل|توظيف|job|jobs|emploi|travail/.test(p)) {
-      const d = await external("https://www.arbeitnow.com/api/job-board-api");
-      const items = Array.isArray(d) ? d : (d.data || []);
-      out.push("فرص من Arbeitnow، وهي ليست قاعدة وظائف مغربية رسمية: " + JSON.stringify(items.slice(0, 8)));
-    }
-  } catch (_) {}
-  return out.join("\n");
+  const tasks = [];
+
+  if (/صرف|عملة|دولار|يورو|درهم|exchange|currency|eur|usd/.test(p)) {
+    tasks.push(
+      external("https://api.frankfurter.dev/v2/rates?base=EUR&quotes=MAD,USD")
+        .then(d => "بيانات صرف حديثة من Frankfurter: " + JSON.stringify(d))
+        .catch(() => null)
+    );
+  }
+
+  if (/كتاب|كتب|رواية|book|books/.test(p)) {
+    const q = encodeURIComponent(prompt.slice(0, 80));
+    tasks.push(
+      external("https://openlibrary.org/search.json?q=" + q + "&limit=5&fields=title,author_name,first_publish_year")
+        .then(d => "نتائج كتب من Open Library: " + JSON.stringify(d.docs || []))
+        .catch(() => null)
+    );
+  }
+
+  if (/وظيف|عمل|توظيف|job|jobs|emploi|travail/.test(p)) {
+    tasks.push(
+      external("https://www.arbeitnow.com/api/job-board-api")
+        .then(d => {
+          const items = Array.isArray(d) ? d : (d.data || []);
+          return "فرص من Arbeitnow، وهي ليست قاعدة وظائف مغربية رسمية: " + JSON.stringify(items.slice(0, 8));
+        })
+        .catch(() => null)
+    );
+  }
+
+  if (!tasks.length) return "";
+
+  const values = await Promise.race([
+    Promise.all(tasks),
+    new Promise(resolve => setTimeout(() => resolve([]), 3000))
+  ]);
+
+  return values.filter(Boolean).join("\n");
 }
 
 module.exports = async function(req, res) {
