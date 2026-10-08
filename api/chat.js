@@ -56,12 +56,17 @@ async function liveContext(prompt) {
 
   if (!tasks.length) return "";
 
-  const values = await Promise.race([
-    Promise.all(tasks),
-    new Promise(resolve => setTimeout(() => resolve([]), 3000))
-  ]);
+  let timer;
+  const timeout = new Promise(resolve => {
+    timer = setTimeout(() => resolve([]), 3000);
+  });
 
-  return values.filter(Boolean).join("\n");
+  try {
+    const values = await Promise.race([Promise.all(tasks), timeout]);
+    return values.filter(Boolean).join("\n");
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 module.exports = async function(req, res) {
