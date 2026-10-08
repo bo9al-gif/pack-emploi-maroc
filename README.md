@@ -9,7 +9,7 @@ Pack pratique pour préparer une candidature professionnelle au Maroc.
 - Checklist des documents
 - Conseils pour la recherche d'emploi
 
-## Prix indicatif
-29 MAD
+## Prix actuel du produit principal
+49 MAD
 
 Les informations personnelles doivent être remplacées par celles du candidat avant utilisation.
