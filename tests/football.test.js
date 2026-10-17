@@ -182,3 +182,28 @@ test("falls back to basic fixture data when advanced fixture fields are not incl
     else process.env.SPORTMONKS_API_TOKEN = originalToken;
   }
 });
+
+
+test("football analysis rejects invalid payloads before using an AI provider", async () => {
+  const analysis = require("../api/football-analysis");
+  const originalFetch = global.fetch;
+  const originalPublic = process.env.ENABLE_PUBLIC_FALLBACK;
+  let calls = 0;
+  global.fetch = async () => { calls += 1; throw new Error("unexpected fetch"); };
+  process.env.ENABLE_PUBLIC_FALLBACK = "false";
+  try {
+    const badFixture = makeRes();
+    await analysis(makeReq({ fixture: { name:"missing id" } }, "POST", "sm-analysis-invalid"), badFixture);
+    assert.equal(badFixture.code, 400);
+    assert.equal(calls, 0);
+
+    const wrongForms = makeRes();
+    await analysis(makeReq({ fixture:{ id:123, name:"Home vs Away" }, forms:[] }, "POST", "sm-analysis-forms"), wrongForms);
+    assert.equal(wrongForms.code, 400);
+    assert.equal(calls, 0);
+  } finally {
+    global.fetch = originalFetch;
+    if (originalPublic === undefined) delete process.env.ENABLE_PUBLIC_FALLBACK;
+    else process.env.ENABLE_PUBLIC_FALLBACK = originalPublic;
+  }
+});
