@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#101827">
+  <meta name="description" content="مركز بيانات كرة القدم في AI Maroc: المواعيد، النتائج، الإحصائيات والتشكيلات حسب تغطية Sportmonks.">
+  <title>تحليل كرة القدم | AI Maroc</title>
+  <style>
+    :root{color-scheme:dark;--bg:#0b1220;--panel:#111c2d;--panel2:#17243a;--line:#283a55;--text:#edf4ff;--muted:#a9b8cc;--accent:#6ee7b7;--accent2:#60a5fa;--warn:#fbbf24;--bad:#fca5a5}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#142541 0,#0b1220 48%,#080e19 100%);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;color:var(--text);line-height:1.65}
+    a{color:#93c5fd}button,input{font:inherit}button{cursor:pointer}
+    .wrap{max-width:1100px;margin:auto;padding:22px 16px 50px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:22px;flex-wrap:wrap}.brand{font-size:14px;color:var(--muted)}.back{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--panel);padding:8px 13px;border-radius:12px;text-decoration:none;color:var(--text)}
+    .hero,.panel{border:1px solid var(--line);background:linear-gradient(145deg,rgba(23,36,58,.97),rgba(17,28,45,.96));border-radius:22px;padding:22px;box-shadow:0 12px 30px rgba(0,0,0,.14)}
+    .hero{margin-bottom:16px}.eyebrow{color:var(--accent);font-weight:750;font-size:13px}.hero h1{font-size:clamp(25px,4vw,38px);line-height:1.25;margin:7px 0 10px}.hero p,.muted{color:var(--muted);margin:0}.pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.pill{font-size:12px;border:1px solid #35506d;background:#112036;color:#c9e1ff;padding:5px 10px;border-radius:999px}
+    .panel{margin-top:16px}.panel h2{font-size:19px;margin:0 0 6px}.controls{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;align-items:end;margin-top:16px}.field{min-width:0}.field label{display:block;font-size:13px;color:var(--muted);margin-bottom:5px}.field input{width:100%;border:1px solid var(--line);background:#0a1424;color:var(--text);border-radius:12px;padding:10px 11px;min-width:0}
+    .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.btn{border:1px solid #426186;background:#1c3a5f;color:white;padding:9px 14px;border-radius:12px;font-weight:700}.btn.primary{border-color:#059669;background:#047857}.btn.ghost{background:transparent;border-color:var(--line);color:var(--text)}.btn:disabled{opacity:.55;cursor:wait}
+    .notice{margin-top:13px;border:1px solid #35506d;background:#0a1728;padding:11px 13px;border-radius:12px;color:#cbd8e8;font-size:13px}.notice.warn{border-color:#7c5b19;color:#fde68a;background:#261d0b}
+    .status{font-size:13px;color:var(--muted);margin-top:12px;min-height:24px}.match-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:14px}
+    .match{background:rgba(7,16,29,.6);border:1px solid var(--line);border-radius:16px;padding:15px;min-width:0}.match-head{display:flex;justify-content:space-between;gap:10px;align-items:center;color:var(--muted);font-size:12px;margin-bottom:10px}.league{color:var(--accent);font-weight:700}.teams{font-weight:800;font-size:17px;overflow-wrap:anywhere;line-height:1.5}.score{font-size:21px;font-weight:850;color:#d1fae5;margin-top:3px}.sub{font-size:12px;color:var(--muted);margin-top:5px}.match .actions{margin-top:12px}.match .btn{font-size:13px;padding:7px 10px}
+    .results{margin-top:12px}.empty{border:1px dashed var(--line);padding:18px;border-radius:14px;color:var(--muted);text-align:center}.detail{margin-top:18px;border-top:1px solid var(--line);padding-top:18px}.detail h3{margin:0 0 8px;font-size:18px}.detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.data-box{border:1px solid var(--line);border-radius:12px;padding:12px;min-width:0;background:rgba(5,12,23,.3)}.data-box h4{font-size:14px;margin:0 0 7px;color:#bfdbfe}.data-box pre{white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word;max-height:320px;overflow:auto;font-size:11px;color:#c8d7e9;margin:0;direction:ltr;text-align:left}.data-box p{font-size:13px;color:var(--muted);margin:0}.footer{color:#8798af;font-size:12px;text-align:center;margin:22px auto 0;max-width:760px}
+    @media(max-width:720px){.controls{grid-template-columns:repeat(2,minmax(0,1fr))}.match-list,.detail-grid{grid-template-columns:1fr}.hero,.panel{padding:16px;border-radius:18px}.wrap{padding:14px 11px 35px}.teams{font-size:16px}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="top">
+      <div class="brand">🇲🇦 AI Maroc · مركز بيانات كرة القدم</div>
+      <a class="back" href="/">← الرجوع للرئيسية</a>
+    </div>
+
+    <section class="hero">
+      <div class="eyebrow">SPORTMONKS · FOOTBALL DATA</div>
+      <h1>مركز المباريات والتحليل</h1>
+      <p>جمع المواعيد والنتائج والترتيب والفورمة وبعض الإحصائيات فواجهة واحدة. التفاصيل المتاحة كتتبدل حسب البطولة وخطة Sportmonks؛ أي معلومة ما رجعاتش من المصدر كتبقى غير مؤكدة.</p>
+      <div class="pills"><span class="pill">المباريات والنتائج</span><span class="pill">الفورمة حسب الفريق</span><span class="pill">الإحصائيات والتشكيلات</span><span class="pill">الأسعار والتوقعات عند توفرها</span></div>
+    </section>
+
+    <section class="panel">
+      <h2>البحث على المباريات</h2>
+      <p class="muted">اختار نهار محدد أو فترة قصيرة، أو قلب باسم فريق. الفترة محدودة باش ما نستهلكوش الطلبات بلا داعي.</p>
+      <div class="controls">
+        <div class="field"><label for="from">من تاريخ</label><input type="date" id="from"></div>
+        <div class="field"><label for="to">إلى تاريخ</label><input type="date" id="to"></div>
+        <div class="field"><label for="q">اسم الفريق أو المباراة</label><input id="q" maxlength="80" placeholder="مثال: Real Madrid"></div>
+        <div class="field"><label for="seasonId">معرّف الموسم للترتيب</label><input id="seasonId" inputmode="numeric" placeholder="Season ID"></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" id="rangeBtn" onclick="loadFixtures()">جلب المباريات</button>
+        <button class="btn" id="liveBtn" onclick="loadLive()">المباريات المباشرة</button>
+        <button class="btn" id="searchBtn" onclick="searchMatches()">بحث بالاسم</button>
+        <button class="btn ghost" id="leaguesBtn" onclick="loadLeagues()">الدوريات المتاحة</button>
+        <button class="btn ghost" id="standingsBtn" onclick="loadStandings()">جلب الترتيب</button>
+      </div>
+      <div class="notice" id="dataNotice">المصدر: Sportmonks API. ما غاديش يتعرض أي مفتاح سري فالمتصفح. الأسعار والتوقعات والغيابات ممكن تكون غير متاحة ضمن بعض الخطط.</div>
+      <div class="status" id="status" role="status" aria-live="polite"></div>
+      <div class="results" id="results"><div class="empty">اختار البحث باش تظهر المباريات هنا.</div></div>
+      <section class="detail" id="detail" hidden></section>
+    </section>
+
+    <p class="footer">الإحصائيات كتساعد على الفهم وما كتضمنش نتيجة المباراة أو الربح. غياب معلومة من الرد ما كيعنيش أن الإصابات أو المخاطر غير موجودة.</p>
+  </main>
+
+<script>
+const $ = id => document.getElementById(id);
+const esc = value => String(value ?? "").replace(/[&<>"']/g, char => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[char]));
+const api = async params => {
+  const query = new URLSearchParams(params);
+  const response = await fetch("/api/football?" + query.toString(), { headers: { Accept:"application/json" } });
+  const payload = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    const error = new Error(payload.error || "تعذر جلب بيانات كرة القدم.");
+    error.code = payload.code || "";
+    throw error;
+  }
+  return payload;
+};
+const isoToday = () => new Intl.DateTimeFormat("en-CA", { timeZone:"Africa/Casablanca", year:"numeric", month:"2-digit", day:"2-digit" }).format(new Date());
+const addDays = (iso, n) => { const date = new Date(iso + "T12:00:00Z"); date.setUTCDate(date.getUTCDate() + n); return date.toISOString().slice(0,10); };
+$("from").value = isoToday();
+$("to").value = addDays(isoToday(), 6);
+
+function listFrom(payload) {
+  if (Array.isArray(payload?.data)) return payload.data;
+  if (payload?.data && typeof payload.data === "object") return [payload.data];
+  return [];
+}
+function participantNames(match) {
+  const names = Array.isArray(match?.participants) ? match.participants.map(p => p?.name).filter(Boolean) : [];
+  return names.length ? names.join(" — ") : (match?.name || "مباراة بدون اسم");
+}
+function teamIds(match) {
+  return Array.isArray(match?.participants) ? match.participants.map(p => ({ id:p?.id, name:p?.name })).filter(p => Number.isSafeInteger(Number(p.id)) && p.name) : [];
+}
+function scoreText(match) {
+  if (!Array.isArray(match?.scores) || !match.scores.length) return "";
+  const teams = teamIds(match);
+  const values = teams.map(team => {
+    const entries = match.scores.filter(s => String(s?.participant_id) === String(team.id));
+    const selected = entries.find(s => /CURRENT|FULL.?TIME|FT|2ND.?HALF/i.test(String(s?.description || ""))) || entries[entries.length - 1];
+    return selected?.score?.goals ?? selected?.score?.score ?? selected?.goals ?? null;
+  });
+  return values.some(v => v !== null) ? values.map(v => v ?? "—").join(" : ") : "";
+}
+function safeObject(value) {
+  try { return JSON.stringify(value, null, 2); } catch { return String(value); }
+}
+function detailBox(title, value) {
+  if (value === undefined || value === null || (Array.isArray(value) && value.length === 0)) {
+    return '<div class="data-box"><h4>' + esc(title) + '</h4><p>هاد البيانات ما رجعاتش من المصدر لهاد المباراة؛ ما نقدرش نستنتجو منها أنها غير موجودة.</p></div>';
+  }
+  return '<div class="data-box"><h4>' + esc(title) + '</h4><pre>' + esc(safeObject(value)) + '</pre></div>';
+}
+function setLoading(active, message) {
+  ["rangeBtn","liveBtn","searchBtn","leaguesBtn","standingsBtn"].forEach(id => $(id).disabled = active);
+  $("status").textContent = message || "";
+}
+function renderList(payload) {
+  const matches = listFrom(payload);
+  $("detail").hidden = true;
+  $("detail").innerHTML = "";
+  if (!matches.length) {
+    $("results").innerHTML = '<div class="empty">ما لقيتش مباريات فهاد البحث، أو المصدر ما رجّع حتى نتيجة. جرّب تاريخاً آخر أو راجع تغطية حساب Sportmonks.</div>';
+    return;
+  }
+  $("results").innerHTML = '<div class="match-list">' + matches.map((match, index) => {
+    const leagueName = match?.league?.name || "البطولة غير محددة";
+    const state = match?.state?.name || match?.state?.short_name || "الحالة غير محددة";
+    const date = match?.starting_at || "";
+    const score = scoreText(match);
+    const teams = teamIds(match);
+    const formButtons = teams.slice(0,2).map(team => '<button class="btn ghost" onclick="loadTeamForm(' + Number(team.id) + ')">فورمة ' + esc(team.name) + '</button>').join("");
+    return '<article class="match"><div class="match-head"><span class="league">' + esc(leagueName) + '</span><span>' + esc(state) + '</span></div><div class="teams">' + esc(participantNames(match)) + '</div>' +
+      (score ? '<div class="score">' + esc(score) + '</div>' : '') +
+      '<div class="sub">الوقت كما يورده المصدر: ' + esc(date || "غير متوفر") + '</div><div class="actions">' +
+      '<button class="btn primary" onclick="loadDetail(' + Number(match.id) + ')">التفاصيل والإحصائيات</button>' + '<button class="btn primary" onclick="analyzeMatch(' + Number(match.id) + ')">تحليل شامل AI</button>' + formButtons + '</div></article>';
+  }).join("") + '</div>';
+}
+async function run(params, label) {
+  setLoading(true, label || "كنجلب المعطيات من Sportmonks...");
+  try {
+    const payload = await api(params);
+    const metaText = payload?.meta ? " · معلومات pagination متوفرة" : "";
+    $("status").textContent = "المصدر: " + (payload.source || "Sportmonks") + " · آخر جلب: " + new Date(payload.fetched_at || Date.now()).toLocaleString("fr-MA") + metaText;
+    renderList(payload);
+    return payload;
+  } catch (error) {
+    $("results").innerHTML = '<div class="empty">' + esc(error.message) + (error.code ? '<br><small>رمز: ' + esc(error.code) + '</small>' : '') + '</div>';
+    $("status").textContent = "تعذر إكمال الطلب.";
+    if (error.code === "SPORTMONKS_TOKEN_MISSING") {
+      $("dataNotice").classList.add("warn");
+      $("dataNotice").textContent = "خاص إعداد المتغير السري SPORTMONKS_API_TOKEN فـVercel → Project Settings → Environment Variables، من بعد إعادة النشر. ما تدخلش المفتاح فهاد الصفحة أو فالكود.";
+    }
+    return null;
+  } finally {
+    setLoading(false);
+  }
+}
+function loadFixtures() {
+  const from = $("from").value, to = $("to").value;
+  if (!from || !to) { $("status").textContent = "اختار تاريخ البداية والنهاية."; return; }
+  if (from > to) { $("status").textContent = "تاريخ النهاية خاصو يكون من بعد البداية."; return; }
+  if ((Date.parse(to) - Date.parse(from)) / 86400000 > 14) { $("status").textContent = "الفترة القصوى هي 14 يوم."; return; }
+  return run({ action:"fixtures", from, to }, "كنجلب مباريات هاد الفترة...");
+}
+function loadLive() { return run({ action:"live" }, "كنجلب المباريات المباشرة..."); }
+function searchMatches() {
+  const q = $("q").value.trim();
+  if (q.length < 2) { $("status").textContent = "كتب اسم فريق أو جزء من اسم المباراة."; return; }
+  return run({ action:"search", q }, "كنقلب على المباراة...");
+}
+async function loadDetail(id) {
+  if (!Number.isSafeInteger(id) || id <= 0) return;
+  setLoading(true, "كنجلب الإحصائيات والتشكيلات والغيابات المتاحة...");
+  try {
+    const payload = await api({ action:"fixture", id:String(id) });
+    const fixture = payload.data || {};
+    const sections = [
+      ["الفريقان والنتيجة", { name:fixture.name, starting_at:fixture.starting_at, league:fixture.league, participants:fixture.participants, scores:fixture.scores, state:fixture.state, venue:fixture.venue }],
+      ["إحصائيات المباراة", fixture.statistics],
+      ["الأحداث والأهداف والبطاقات", fixture.events],
+      ["التشكيلة والتفاصيل", fixture.lineups],
+      ["الإصابات والغيابات", fixture.sidelined],
+      ["الأسعار المتاحة", fixture.odds],
+      ["توقعات المصدر", fixture.predictions],
+      ["xG ومؤشرات متقدمة", fixture.xGFixture],
+      ["التشكيلة المتوقعة", fixture.expectedLineups],
+      ["الحكام والمدربون", { referees:fixture.referees, coaches:fixture.coaches }]
+    ];
+    $("detail").innerHTML = (payload.limited_detail ? '<div class="notice warn">' + esc(payload.warning || "بعض التفاصيل المتقدمة غير متاحة ضمن خطة Sportmonks الحالية.") + '</div>' : "") + '<h3>تفاصيل المباراة: ' + esc(fixture.name || ("#" + id)) + '</h3><p class="muted">نعرض فقط الحقول التي أرجعها المصدر؛ أي قسم فارغ لا يعني أن المعلومة غير موجودة.</p><div class="detail-grid">' + sections.map(s => detailBox(s[0],s[1])).join("") + '</div>';
+    $("detail").hidden = false;
+    $("status").textContent = "تم جلب تفاصيل المباراة من Sportmonks.";
+    $("detail").scrollIntoView({ behavior:"smooth", block:"start" });
+  } catch (error) {
+    $("status").textContent = error.message;
+    $("detail").hidden = true;
+  } finally {
+    setLoading(false);
+  }
+}
+
+async function analyzeMatch(id) {
+  if (!Number.isSafeInteger(id) || id <= 0) return;
+  setLoading(true, "كنجمع بيانات المباراة والفورمة، ومن بعدها كنولد التحليل...");
+  $("detail").hidden = false;
+  $("detail").innerHTML = '<h3>كنوجد التحليل الشامل...</h3><p class="muted">كنفصل بين المعطيات المتوفرة والاستنتاجات، وما كنخمنش الغيابات أو الأسعار غير الموجودة.</p>';
+  $("detail").scrollIntoView({ behavior:"smooth", block:"start" });
+  try {
+    const fixturePayload = await api({ action:"fixture", id:String(id) });
+    const fixture = fixturePayload.data || {};
+    const teams = teamIds(fixture).slice(0,2);
+    const matchDate = String(fixture.starting_at || "").slice(0,10);
+    const today = isoToday();
+    const formEnd = matchDate && matchDate < today ? addDays(matchDate,-1) : today;
+    const formStart = addDays(formEnd,-60);
+    const formResults = await Promise.all(teams.map(async team => {
+      try {
+        const response = await api({ action:"team-form", team_id:String(team.id), from:formStart, to:formEnd });
+        const recent = listFrom(response)
+          .sort((a,b) => String(b?.starting_at || "").localeCompare(String(a?.starting_at || "")))
+          .slice(0,10)
+          .map(match => ({
+            id:match.id,
+            name:match.name,
+            starting_at:match.starting_at,
+            league:match.league?.name || null,
+            participants:(match.participants || []).map(p => ({id:p.id,name:p.name,meta:p.meta})),
+            scores:match.scores || [],
+            state:match.state?.name || match.state?.short_name || null
+          }));
+        return [String(team.name), { fixtures:recent, note:recent.length ? null : "No recent fixtures returned by the source." }];
+      } catch {
+        return [String(team.name), { fixtures:[], note:"Recent form was not available from the source." }];
+      }
+    }));
+    const forms = Object.fromEntries(formResults);
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 25000);
+    let response;
+    try {
+      response = await fetch("/api/football-analysis", {
+        method:"POST",
+        headers:{"Content-Type":"application/json","Accept":"application/json"},
+        body:JSON.stringify({ fixture, forms, limitedDetail:!!fixturePayload.limited_detail }),
+        signal:controller.signal
+      });
+    } finally {
+      clearTimeout(timer);
+    }
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      const error = new Error(data.error || "تعذر إنشاء التحليل.");
+      error.code = data.code || "";
+      throw error;
+    }
+    $("detail").innerHTML = '<h3>التحليل الشامل: ' + esc(fixture.name || ("المباراة #" + id)) + '</h3>' +
+      '<p class="muted">المصدر: Sportmonks · التحليل: ' + esc(data.provider || "AI") + (data.model ? " / " + esc(data.model) : "") +
+      ' · ' + esc(new Date(data.generated_at || Date.now()).toLocaleString("fr-MA")) + '</p>' +
+      (fixturePayload.limited_detail ? '<div class="notice warn">خطة المصدر رجعت غير البيانات الأساسية لبعض الحقول؛ هاد الشي كيخفض مستوى الثقة.</div>' : '') +
+      '<div class="analysis-answer">' + esc(data.answer || "ما رجع حتى تحليل.") + '</div>';
+    $("detail").hidden = false;
+    $("status").textContent = "التحليل واجد. راجع مستوى الثقة والبيانات الناقصة قبل اتخاذ أي قرار.";
+  } catch (error) {
+    const message = error.name === "AbortError" ? "التحليل خد وقت طويل. عاود المحاولة." : error.message;
+    $("detail").innerHTML = '<h3>ما قدرناش نكملو التحليل</h3><div class="notice warn">' + esc(message) + (error.code ? '<br><small>رمز: ' + esc(error.code) + '</small>' : '') + '</div>';
+    $("detail").hidden = false;
+    $("status").textContent = "التحليل ما تكمّلش.";
+    if (error.code === "SPORTMONKS_TOKEN_MISSING") {
+      $("dataNotice").classList.add("warn");
+      $("dataNotice").textContent = "خاص إضافة المتغير السري SPORTMONKS_API_TOKEN في Vercel ثم إعادة النشر. ما تدخلش المفتاح فالمتصفح أو الكود.";
+    }
+  } finally {
+    setLoading(false);
+  }
+}
+
+async function loadTeamForm(teamId) {
+  const end = isoToday(), start = addDays(end, -60);
+  const payload = await run({ action:"team-form", team_id:String(teamId), from:start, to:end }, "كنجلب الفورمة ديال الفريق #" + teamId + "...");
+  if (payload) $("status").textContent = "الفورمة الأخيرة للفريق #" + teamId + " حسب البيانات المتاحة من Sportmonks.";
+}
+async function loadLeagues() {
+  const payload = await run({ action:"leagues" }, "كنجلب الدوريات اللي داخلة فالتغطية...");
+  if (payload) {
+    const rows = listFrom(payload);
+    if (rows.length) {
+      $("results").innerHTML = '<div class="match-list">' + rows.map(league => {
+        const season = league.currentSeason || league.current_season || null;
+        const id = Number(season?.id);
+        const btn = Number.isSafeInteger(id) && id > 0 ? '<button class="btn ghost" onclick="pickSeason(' + id + ')">الترتيب (الموسم الحالي)</button>' : "";
+        return '<article class="match"><div class="teams">' + esc(league.name || "دوري بلا اسم") + '</div><div class="sub">' + esc(league.country?.name || "") + '</div><div class="actions">' + btn + '</div></article>';
+      }).join("") + '</div>';
+    }
+  }
+}
+function pickSeason(id) { $("seasonId").value = String(id); loadStandings(); }
+async function loadStandings() {
+  const id = $("seasonId").value.trim();
+  if (!/^\d+$/.test(id) || Number(id) <= 0) { $("status").textContent = "خاص معرّف الموسم (Season ID) صحيح."; return; }
+  setLoading(true, "كنجلب ترتيب الموسم...");
+  try {
+    const payload = await api({ action:"standings", season_id:id });
+    const rows = listFrom(payload);
+    if (!rows.length) {
+      $("results").innerHTML = '<div class="empty">ما رجعش المصدر الترتيب لهاد الموسم أو ما داخلش فتغطية الحساب.</div>';
+      return;
+    }
+    rows.sort((a,b) => Number(a.position ?? 9999) - Number(b.position ?? 9999));
+    $("results").innerHTML = '<div class="match-list">' + rows.map(row => {
+      const details = Array.isArray(row.details) ? row.details : [];
+      const getDetail = pattern => {
+        const item = details.find(d => pattern.test(String(d?.type?.name || d?.type?.code || d?.type?.developer_name || "")));
+        return item?.value ?? item?.details ?? null;
+      };
+      const points = row.points ?? getDetail(/point/i) ?? "—";
+      const played = row.played ?? getDetail(/played|appearances/i) ?? "—";
+      const gd = getDetail(/goal difference/i);
+      return '<article class="match"><div class="match-head"><span class="league">المركز ' + esc(row.position ?? "—") + '</span><span>النقاط: ' + esc(points) + '</span></div>' +
+        '<div class="teams">' + esc(row.participant?.name || row.name || ("الفريق #" + (row.participant_id || "؟"))) + '</div>' +
+        '<div class="sub">المباريات: ' + esc(played) + (gd !== null ? ' · فارق الأهداف: ' + esc(gd) : '') + '</div></article>';
+    }).join("") + '</div>';
+    $("detail").hidden = true;
+    $("status").textContent = "ترتيب الموسم من Sportmonks · آخر جلب: " + new Date(payload.fetched_at || Date.now()).toLocaleString("fr-MA");
+  } catch (error) {
+    $("results").innerHTML = '<div class="empty">' + esc(error.message) + (error.code ? '<br><small>رمز: ' + esc(error.code) + '</small>' : '') + '</div>';
+    $("status").textContent = "تعذر جلب الترتيب.";
+  } finally {
+    setLoading(false);
+  }
+}
+</script>
+</body>
+</html>
