@@ -19,4 +19,6 @@ jobs:
       - run: node --check api/chat.js
       - run: node --check api/free-router.js
       - run: node --check api/public-tools.js
+      - run: node --check api/football.js
+      - run: node --check tests/football.test.js
       - run: npm test
