@@ -186,6 +186,26 @@ module.exports = async function(req, res) {
     }, "public, max-age=30, s-maxage=60, stale-while-revalidate=120");
   } catch (error) {
     const status = error.status;
+    if (status === 403 && built.action === "fixture") {
+      try {
+        const basicParams = new URLSearchParams();
+        basicParams.set("include", BASE_INCLUDES);
+        const basicPayload = await requestSportmonks(built.path, basicParams, token);
+        return json(res, 200, {
+          source: "Sportmonks",
+          action: "fixture",
+          fetched_at: new Date().toISOString(),
+          limited_detail: true,
+          warning: "بعض الإحصائيات المتقدمة غير متاحة ضمن الخطة الحالية؛ تم إرجاع بيانات المباراة الأساسية.",
+          ...basicPayload
+        }, "public, max-age=30, s-maxage=60, stale-while-revalidate=120");
+      } catch (fallbackError) {
+        if (fallbackError.status === 401) {
+          return json(res, 502, { error: "Sportmonks رفض مفتاح API. تحقق من المفتاح داخل إعدادات السيرفر.", code: "SPORTMONKS_INVALID_TOKEN" });
+        }
+        return json(res, 502, { error: "Sportmonks لا يسمح بالبيانات المطلوبة ضمن الخطة الحالية.", code: "SPORTMONKS_PLAN_ACCESS" });
+      }
+    }
     if (status === 401) {
       return json(res, 502, { error: "Sportmonks رفض مفتاح API. تحقق من المفتاح داخل إعدادات السيرفر.", code: "SPORTMONKS_INVALID_TOKEN" });
     }
