@@ -188,17 +188,18 @@ test("football analysis rejects invalid payloads before using an AI provider", a
   const analysis = require("../api/football-analysis");
   const originalFetch = global.fetch;
   const originalPublic = process.env.ENABLE_PUBLIC_FALLBACK;
+  const makeAnalysisReq = (body, ip) => ({ method:"POST", headers:{"x-forwarded-for":ip}, socket:{remoteAddress:ip}, body });
   let calls = 0;
   global.fetch = async () => { calls += 1; throw new Error("unexpected fetch"); };
   process.env.ENABLE_PUBLIC_FALLBACK = "false";
   try {
     const badFixture = makeRes();
-    await analysis(makeReq({ fixture: { name:"missing id" } }, "POST", "sm-analysis-invalid"), badFixture);
+    await analysis(makeAnalysisReq({ fixture: { name:"missing id" } }, "sm-analysis-invalid"), badFixture);
     assert.equal(badFixture.code, 400);
     assert.equal(calls, 0);
 
     const wrongForms = makeRes();
-    await analysis(makeReq({ fixture:{ id:123, name:"Home vs Away" }, forms:[] }, "POST", "sm-analysis-forms"), wrongForms);
+    await analysis(makeAnalysisReq({ fixture:{ id:123, name:"Home vs Away" }, forms:[] }, "sm-analysis-forms"), wrongForms);
     assert.equal(wrongForms.code, 400);
     assert.equal(calls, 0);
   } finally {
