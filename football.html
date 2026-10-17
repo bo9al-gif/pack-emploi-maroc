@@ -129,7 +129,7 @@ function renderList(payload) {
     const date = match?.starting_at || "";
     const score = scoreText(match);
     const teams = teamIds(match);
-    const formButtons = teams.slice(0,2).map(team => '<button class="btn ghost" onclick="loadTeamForm(' + Number(team.id) + ',\'' + esc(team.name).replace(/'/g,"&#39;") + '\')">فورمة ' + esc(team.name) + '</button>').join("");
+    const formButtons = teams.slice(0,2).map(team => '<button class="btn ghost" onclick="loadTeamForm(' + Number(team.id) + ')">فورمة ' + esc(team.name) + '</button>').join("");
     return '<article class="match"><div class="match-head"><span class="league">' + esc(leagueName) + '</span><span>' + esc(state) + '</span></div><div class="teams">' + esc(participantNames(match)) + '</div>' +
       (score ? '<div class="score">' + esc(score) + '</div>' : '') +
       '<div class="sub">الوقت كما يورده المصدر: ' + esc(date || "غير متوفر") + '</div><div class="actions">' +
@@ -198,10 +198,10 @@ async function loadDetail(id) {
     setLoading(false);
   }
 }
-async function loadTeamForm(teamId, name) {
+async function loadTeamForm(teamId) {
   const end = isoToday(), start = addDays(end, -60);
-  const payload = await run({ action:"team-form", team_id:String(teamId), from:start, to:end }, "كنجلب آخر مباريات " + name + "...");
-  if (payload) $("status").textContent = "الفورمة الأخيرة لـ" + name + " حسب البيانات المتاحة من Sportmonks.";
+  const payload = await run({ action:"team-form", team_id:String(teamId), from:start, to:end }, "كنجلب الفورمة ديال الفريق #" + teamId + "...");
+  if (payload) $("status").textContent = "الفورمة الأخيرة للفريق #" + teamId + " حسب البيانات المتاحة من Sportmonks.";
 }
 async function loadLeagues() {
   const payload = await run({ action:"leagues" }, "كنجلب الدوريات اللي داخلة فالتغطية...");
@@ -218,10 +218,39 @@ async function loadLeagues() {
   }
 }
 function pickSeason(id) { $("seasonId").value = String(id); loadStandings(); }
-function loadStandings() {
+async function loadStandings() {
   const id = $("seasonId").value.trim();
   if (!/^\d+$/.test(id) || Number(id) <= 0) { $("status").textContent = "خاص معرّف الموسم (Season ID) صحيح."; return; }
-  return run({ action:"standings", season_id:id }, "كنجلب ترتيب الموسم...");
+  setLoading(true, "كنجلب ترتيب الموسم...");
+  try {
+    const payload = await api({ action:"standings", season_id:id });
+    const rows = listFrom(payload);
+    if (!rows.length) {
+      $("results").innerHTML = '<div class="empty">ما رجعش المصدر الترتيب لهاد الموسم أو ما داخلش فتغطية الحساب.</div>';
+      return;
+    }
+    rows.sort((a,b) => Number(a.position ?? 9999) - Number(b.position ?? 9999));
+    $("results").innerHTML = '<div class="match-list">' + rows.map(row => {
+      const details = Array.isArray(row.details) ? row.details : [];
+      const getDetail = pattern => {
+        const item = details.find(d => pattern.test(String(d?.type?.name || d?.type?.code || d?.type?.developer_name || "")));
+        return item?.value ?? item?.details ?? null;
+      };
+      const points = row.points ?? getDetail(/point/i) ?? "—";
+      const played = row.played ?? getDetail(/played|appearances/i) ?? "—";
+      const gd = getDetail(/goal difference/i);
+      return '<article class="match"><div class="match-head"><span class="league">المركز ' + esc(row.position ?? "—") + '</span><span>النقاط: ' + esc(points) + '</span></div>' +
+        '<div class="teams">' + esc(row.participant?.name || row.name || ("الفريق #" + (row.participant_id || "؟"))) + '</div>' +
+        '<div class="sub">المباريات: ' + esc(played) + (gd !== null ? ' · فارق الأهداف: ' + esc(gd) : '') + '</div></article>';
+    }).join("") + '</div>';
+    $("detail").hidden = true;
+    $("status").textContent = "ترتيب الموسم من Sportmonks · آخر جلب: " + new Date(payload.fetched_at || Date.now()).toLocaleString("fr-MA");
+  } catch (error) {
+    $("results").innerHTML = '<div class="empty">' + esc(error.message) + (error.code ? '<br><small>رمز: ' + esc(error.code) + '</small>' : '') + '</div>';
+    $("status").textContent = "تعذر جلب الترتيب.";
+  } finally {
+    setLoading(false);
+  }
 }
 </script>
 </body>
