@@ -187,7 +187,7 @@ async function loadDetail(id) {
       ["التشكيلة المتوقعة", fixture.expectedLineups],
       ["الحكام والمدربون", { referees:fixture.referees, coaches:fixture.coaches }]
     ];
-    $("detail").innerHTML = '<h3>تفاصيل المباراة: ' + esc(fixture.name || ("#" + id)) + '</h3><p class="muted">نعرض فقط الحقول التي أرجعها المصدر؛ أي قسم فارغ لا يعني أن المعلومة غير موجودة.</p><div class="detail-grid">' + sections.map(s => detailBox(s[0],s[1])).join("") + '</div>';
+    $("detail").innerHTML = (payload.limited_detail ? '<div class="notice warn">' + esc(payload.warning || "بعض التفاصيل المتقدمة غير متاحة ضمن خطة Sportmonks الحالية.") + '</div>' : "") + '<h3>تفاصيل المباراة: ' + esc(fixture.name || ("#" + id)) + '</h3><p class="muted">نعرض فقط الحقول التي أرجعها المصدر؛ أي قسم فارغ لا يعني أن المعلومة غير موجودة.</p><div class="detail-grid">' + sections.map(s => detailBox(s[0],s[1])).join("") + '</div>';
     $("detail").hidden = false;
     $("status").textContent = "تم جلب تفاصيل المباراة من Sportmonks.";
     $("detail").scrollIntoView({ behavior:"smooth", block:"start" });
