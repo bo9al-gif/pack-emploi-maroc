@@ -133,7 +133,7 @@ function renderList(payload) {
     return '<article class="match"><div class="match-head"><span class="league">' + esc(leagueName) + '</span><span>' + esc(state) + '</span></div><div class="teams">' + esc(participantNames(match)) + '</div>' +
       (score ? '<div class="score">' + esc(score) + '</div>' : '') +
       '<div class="sub">الوقت كما يورده المصدر: ' + esc(date || "غير متوفر") + '</div><div class="actions">' +
-      '<button class="btn primary" onclick="loadDetail(' + Number(match.id) + ')">التفاصيل والإحصائيات</button>' + formButtons + '</div></article>';
+      '<button class="btn primary" onclick="loadDetail(' + Number(match.id) + ')">التفاصيل والإحصائيات</button>' + '<button class="btn primary" onclick="analyzeMatch(' + Number(match.id) + ')">تحليل شامل AI</button>' + formButtons + '</div></article>';
   }).join("") + '</div>';
 }
 async function run(params, label) {
@@ -198,6 +198,82 @@ async function loadDetail(id) {
     setLoading(false);
   }
 }
+
+async function analyzeMatch(id) {
+  if (!Number.isSafeInteger(id) || id <= 0) return;
+  setLoading(true, "كنجمع بيانات المباراة والفورمة، ومن بعدها كنولد التحليل...");
+  $("detail").hidden = false;
+  $("detail").innerHTML = '<h3>كنوجد التحليل الشامل...</h3><p class="muted">كنفصل بين المعطيات المتوفرة والاستنتاجات، وما كنخمنش الغيابات أو الأسعار غير الموجودة.</p>';
+  $("detail").scrollIntoView({ behavior:"smooth", block:"start" });
+  try {
+    const fixturePayload = await api({ action:"fixture", id:String(id) });
+    const fixture = fixturePayload.data || {};
+    const teams = teamIds(fixture).slice(0,2);
+    const matchDate = String(fixture.starting_at || "").slice(0,10);
+    const today = isoToday();
+    const formEnd = matchDate && matchDate < today ? addDays(matchDate,-1) : today;
+    const formStart = addDays(formEnd,-60);
+    const formResults = await Promise.all(teams.map(async team => {
+      try {
+        const response = await api({ action:"team-form", team_id:String(team.id), from:formStart, to:formEnd });
+        const recent = listFrom(response)
+          .sort((a,b) => String(b?.starting_at || "").localeCompare(String(a?.starting_at || "")))
+          .slice(0,10)
+          .map(match => ({
+            id:match.id,
+            name:match.name,
+            starting_at:match.starting_at,
+            league:match.league?.name || null,
+            participants:(match.participants || []).map(p => ({id:p.id,name:p.name,meta:p.meta})),
+            scores:match.scores || [],
+            state:match.state?.name || match.state?.short_name || null
+          }));
+        return [String(team.name), { fixtures:recent, note:recent.length ? null : "No recent fixtures returned by the source." }];
+      } catch {
+        return [String(team.name), { fixtures:[], note:"Recent form was not available from the source." }];
+      }
+    }));
+    const forms = Object.fromEntries(formResults);
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 25000);
+    let response;
+    try {
+      response = await fetch("/api/football-analysis", {
+        method:"POST",
+        headers:{"Content-Type":"application/json","Accept":"application/json"},
+        body:JSON.stringify({ fixture, forms, limitedDetail:!!fixturePayload.limited_detail }),
+        signal:controller.signal
+      });
+    } finally {
+      clearTimeout(timer);
+    }
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      const error = new Error(data.error || "تعذر إنشاء التحليل.");
+      error.code = data.code || "";
+      throw error;
+    }
+    $("detail").innerHTML = '<h3>التحليل الشامل: ' + esc(fixture.name || ("المباراة #" + id)) + '</h3>' +
+      '<p class="muted">المصدر: Sportmonks · التحليل: ' + esc(data.provider || "AI") + (data.model ? " / " + esc(data.model) : "") +
+      ' · ' + esc(new Date(data.generated_at || Date.now()).toLocaleString("fr-MA")) + '</p>' +
+      (fixturePayload.limited_detail ? '<div class="notice warn">خطة المصدر رجعت غير البيانات الأساسية لبعض الحقول؛ هاد الشي كيخفض مستوى الثقة.</div>' : '') +
+      '<div class="analysis-answer">' + esc(data.answer || "ما رجع حتى تحليل.") + '</div>';
+    $("detail").hidden = false;
+    $("status").textContent = "التحليل واجد. راجع مستوى الثقة والبيانات الناقصة قبل اتخاذ أي قرار.";
+  } catch (error) {
+    const message = error.name === "AbortError" ? "التحليل خد وقت طويل. عاود المحاولة." : error.message;
+    $("detail").innerHTML = '<h3>ما قدرناش نكملو التحليل</h3><div class="notice warn">' + esc(message) + (error.code ? '<br><small>رمز: ' + esc(error.code) + '</small>' : '') + '</div>';
+    $("detail").hidden = false;
+    $("status").textContent = "التحليل ما تكمّلش.";
+    if (error.code === "SPORTMONKS_TOKEN_MISSING") {
+      $("dataNotice").classList.add("warn");
+      $("dataNotice").textContent = "خاص إضافة المتغير السري SPORTMONKS_API_TOKEN في Vercel ثم إعادة النشر. ما تدخلش المفتاح فالمتصفح أو الكود.";
+    }
+  } finally {
+    setLoading(false);
+  }
+}
+
 async function loadTeamForm(teamId) {
   const end = isoToday(), start = addDays(end, -60);
   const payload = await run({ action:"team-form", team_id:String(teamId), from:start, to:end }, "كنجلب الفورمة ديال الفريق #" + teamId + "...");
