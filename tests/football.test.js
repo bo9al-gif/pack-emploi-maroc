@@ -1,5 +1,8 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
+const fs = require("node:fs");
+const path = require("node:path");
+const vm = require("node:vm");
 const handler = require("../api/football");
 
 function makeReq(query = {}, method = "GET", ip = "sportmonks-test") {
@@ -136,4 +139,14 @@ test("does not expose upstream authentication or subscription error details", as
     if (originalToken === undefined) delete process.env.SPORTMONKS_API_TOKEN;
     else process.env.SPORTMONKS_API_TOKEN = originalToken;
   }
+});
+
+
+test("football page inline JavaScript parses without syntax errors", () => {
+  const html = fs.readFileSync(path.join(__dirname, "..", "football.html"), "utf8");
+  const scripts = [...html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi)]
+    .map(match => match[1])
+    .filter(script => script.trim());
+  assert.ok(scripts.length > 0, "expected at least one inline script");
+  for (const script of scripts) new vm.Script(script);
 });
