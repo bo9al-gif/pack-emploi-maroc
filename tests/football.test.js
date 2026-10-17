@@ -150,3 +150,35 @@ test("football page inline JavaScript parses without syntax errors", () => {
   assert.ok(scripts.length > 0, "expected at least one inline script");
   for (const script of scripts) new vm.Script(script);
 });
+
+
+test("falls back to basic fixture data when advanced fixture fields are not included in the plan", async () => {
+  const originalToken = process.env.SPORTMONKS_API_TOKEN;
+  const originalFetch = global.fetch;
+  process.env.SPORTMONKS_API_TOKEN = "safe-test-token";
+  let calls = 0;
+  global.fetch = async (url) => {
+    calls += 1;
+    const includes = new URL(String(url)).searchParams.get("include") || "";
+    if (includes.includes("odds")) {
+      return { ok:false, status:403, async text() { return JSON.stringify({ message:"plan restricted" }); } };
+    }
+    return {
+      ok:true,
+      status:200,
+      async text() { return JSON.stringify({ data:{ id:12345, name:"Home vs Away" } }); }
+    };
+  };
+  try {
+    const res = makeRes();
+    await handler(makeReq({ action:"fixture", id:"12345" }, "GET", "sm-fallback-test"), res);
+    assert.equal(res.code, 200);
+    assert.equal(res.body.limited_detail, true);
+    assert.equal(res.body.data.id, 12345);
+    assert.equal(calls, 2);
+  } finally {
+    global.fetch = originalFetch;
+    if (originalToken === undefined) delete process.env.SPORTMONKS_API_TOKEN;
+    else process.env.SPORTMONKS_API_TOKEN = originalToken;
+  }
+});
